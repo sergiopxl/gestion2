@@ -1,0 +1,28 @@
+.cliente-row{
+    display: flex;
+    gap: .5rem;
+    border: 1px solid black;
+    
+
+    .cliente-row-datos{
+        flex-basis: 30%;
+        padding: .5rem 1rem;
+        .cliente-datos-nombre{
+            background-color: lighten($color-azul, 35%);
+        }
+
+        
+    }
+    
+    .cliente-row-contactos{
+        flex-grow: 1;
+        flex-shrink: 0;
+        padding: .5rem 1rem;
+        border-left: 1px dashed $color-gris-medio;
+            
+
+    }
+    &:nth-of-type(odd){
+        background-color: $color-gris-suave;
+    }
+}
