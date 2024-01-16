@@ -1,14 +1,26 @@
 "use strict";
-console.log("clientes.js 1.1");
+console.log("clientes.js 1.2");
 function doClientes(){
     let paginaActual = 1;
     const resultadosPorPagina = 20;
+
     const contenedorListado = document.querySelector("main");
     const templateCliente = document.querySelector(".cliente-row");
-    const getClientes = (actual)=>{
+
+    const buscadorInput = document.querySelector("#buscador-input");
+    const buscadorBoton = document.querySelector("#buscador-boton");
+
+    buscadorBoton.addEventListener("click",()=>{
+        if(buscadorInput.value!=""){
+            console.log(paginaActual,buscadorInput.value);
+        }
+    })
+    const getClientes = (actual,buscar)=>{
         let parametroBuscar = "";
-        let inicio;
+        let busquedaActiva = false;
+        
         let parametroPorPagina = "&porpagina=" + resultadosPorPagina;
+        let inicio;
 
         if (actual){
             paginaActual = actual;
@@ -20,21 +32,39 @@ function doClientes(){
         }else{
             inicio = (paginaActual -1)* resultadosPorPagina;
         }
+        if(buscar && buscar!=""){
+            parametroBuscar = "&buscar" + buscar;
+            busquedaActiva = true;
+            parametroPorPagina = "&porpagina=" + 99999;
+        }
 
         const parametroInicio = "?inicio=" + inicio;
-        fetch(apiUrlClientesGet + parametroInicio + parametroPorPagina, {method:"GET"}).then((respuesta)=>{
+        fetch(apiUrlClientesGet+parametroInicio+parametroPorPagina+parametroBuscar, 
+            {method:"GET"}).then((respuesta)=>{
             respuesta.json().then((clientes)=>{
-            //console.log(clientes)    
-                printListaClientes(clientes.numero_registros, clientes.clientes);
+             
+                printListaClientes(clientes.numero_registros, clientes.clientes,busquedaActiva);
 
             })
         })
 
     }
-     function printListaClientes(registros, clientes){
+     function printListaClientes(registros, clientes,busqueda){
         contenedorListado.innerHTML = "";
+        if(!busqueda){
         doPaginacion (paginaActual, resultadosPorPagina, registros, getClientes);
-        
+
+        }else{
+            const verTodosBoton = document.createElement("button");
+            verTodosBoton.classList.add("btn-info");
+            verTodosBoton.textContent = "Ver listado completo";
+            verTodosBoton.addEventListener("click",()=>{
+                getClientes();
+            })
+            document.querySelector("#paginacion").innerHTML = "<h2>Resultados busqueda:"+clientes.length+" </h2>" ;
+            document.querySelector("#paginacion").append(verTodosBoton);
+
+        }
         clientes.forEach(cliente=>{
             const clienteContenedor = templateCliente.cloneNode(true);
             clienteContenedor.classList.remove("hidden");
