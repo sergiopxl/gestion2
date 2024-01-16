@@ -28,3 +28,19 @@ main{
 .btn-info{
   @include btn($color-info);
 }
+.hidden{
+  display:none !important;
+}
+.acciones-pagina{
+  position: sticky;
+  top: 60px;
+  background-color: aliceblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0.5rem;
+  margin: auto;
+  margin-bottom: 1px;
+  width: $wrapper-size;
+  
+}

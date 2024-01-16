@@ -1,0 +1,19 @@
+//TODO: falta alinear correctamente los elementos
+#paginacion{
+    display: flex;
+    gap: 5rem;
+    .elemento-paginacion{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: .5rem;
+        min-width: 2rem;
+        border-radius: .3rem;
+        background-color: $color-gris-suave;
+        cursor: pointer;
+        &.elemento-paginacion-actual{
+            background-color: $color-gris-oscuro;
+            color: white;
+        }
+    }
+}

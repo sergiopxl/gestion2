@@ -88,6 +88,23 @@ main {
   background-color: white;
 }
 
+.hidden {
+  display: none !important;
+}
+
+.acciones-pagina {
+  position: sticky;
+  top: 60px;
+  background-color: aliceblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0.5rem;
+  margin: auto;
+  margin-bottom: 1px;
+  width: min(1024px, 90vw);
+}
+
 #header-pagina {
   background-color: #b1b0b0;
   display: flex;
@@ -128,4 +145,23 @@ main {
 }
 .cliente-row:nth-of-type(odd) {
   background-color: #e2e2e2;
+}
+
+#paginacion {
+  display: flex;
+  gap: 5rem;
+}
+#paginacion .elemento-paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  min-width: 2rem;
+  border-radius: 0.3rem;
+  background-color: #e2e2e2;
+  cursor: pointer;
+}
+#paginacion .elemento-paginacion.elemento-paginacion-actual {
+  background-color: #343434;
+  color: white;
 }/*# sourceMappingURL=theme.css.map */
