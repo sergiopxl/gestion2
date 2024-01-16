@@ -6,9 +6,22 @@ header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Ca
 header("Access-Control-Allow-Methods: GET");
 include("conn/conexion.php");
 
+$inicio = $_GET["inicio"];
+$porPagina = $_GET["porpagina"];
 
 
-$sqlClientes = "SELECT * FROM `clientes_tb` WHERE activo =1";
+$limite = " LIMIT $inicio, $porPagina ";
+$respuesta = [];
+
+$sqlNumeroRegistros = "SELECT COUNT(*) AS numero_registros FROM clientes_tb WHERE activo = 1";
+$respuestaNumeroRegistros = mysqli_query($conn,$sqlNumeroRegistros);
+
+$fila =mysqli_fetch_assoc($respuestaNumeroRegistros);
+$respuesta["numero_registros"] = $fila['numero_registros'];
+
+
+
+$sqlClientes = "SELECT * FROM `clientes_tb` WHERE activo =1 $limite";
 $resultadoClientes = mysqli_query($conn,$sqlClientes);
 //var_dump($resultadoClientes);
 $clientes = [];
@@ -22,5 +35,6 @@ while($cliente = mysqli_fetch_assoc($resultadoClientes)){
     $cliente["contactos"]= $contactos;
     $clientes[] = $cliente;
 }
-echo json_encode($clientes);
+$respuesta["clientes"] = $clientes;
+echo json_encode($respuesta);
 ?>
