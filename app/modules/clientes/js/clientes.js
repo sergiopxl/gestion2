@@ -1,20 +1,39 @@
 "use strict";
 console.log("clientes.js 1.1");
 function doClientes(){
+    let paginaActual = 1;
+    const resultadosPorPagina = 20;
     const contenedorListado = document.querySelector("main");
     const templateCliente = document.querySelector(".cliente-row");
-    function getClientes(){
-        fetch(apiUrlClientesGet, {method:"GET"}).then((respuesta)=>{
+    const getClientes = (actual)=>{
+        let parametroBuscar = "";
+        let inicio;
+        let parametroPorPagina = "&porpagina=" + resultadosPorPagina;
+
+        if (actual){
+            paginaActual = actual;
+            
+        }
+        if (paginaActual==1) {
+            inicio = 0;
+            
+        }else{
+            inicio = (paginaActual -1)* resultadosPorPagina;
+        }
+
+        const parametroInicio = "?inicio=" + inicio;
+        fetch(apiUrlClientesGet + parametroInicio + parametroPorPagina, {method:"GET"}).then((respuesta)=>{
             respuesta.json().then((clientes)=>{
             //console.log(clientes)    
-                printListaClientes(clientes)
+                printListaClientes(clientes.numero_registros, clientes.clientes);
 
             })
         })
 
     }
-     function printListaClientes(clientes){
+     function printListaClientes(registros, clientes){
         contenedorListado.innerHTML = "";
+        doPaginacion (paginaActual, resultadosPorPagina, registros, getClientes);
         
         clientes.forEach(cliente=>{
             const clienteContenedor = templateCliente.cloneNode(true);

@@ -110,6 +110,8 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: sticky;
+  top: 0;
 }
 
 #navegacion-principal {
@@ -149,7 +151,7 @@ main {
 
 #paginacion {
   display: flex;
-  gap: 5rem;
+  gap: 0.5rem;
 }
 #paginacion .elemento-paginacion {
   display: flex;
