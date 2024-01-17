@@ -121,7 +121,7 @@ function doClientes(){
          getClientesSectores();
         //  setContactos();
          
-         
+
          function getClientesSectores(){
             fetch(apiUrlClientesSectoresGet, {method: "GET"})
             .then(respuesta => respuesta.json()
@@ -139,6 +139,15 @@ function doClientes(){
             })
             )
          }
+         botonEnviar.addEventListener("click", (event) =>{
+            event.preventDefault();
+            const datosFormulario = new FormData(clienteFormularioEdicion);
+            fetch(apiUrlClientesUpdate,{ method: "POST", body: datosFormulario})
+            .then(response => response.json()
+            .then(data => {
+                console.log(data);
+            }));
+         });
 
         contenedorListado.innerHTML = "";
         contenedorListado.append(bloqueFormulario);

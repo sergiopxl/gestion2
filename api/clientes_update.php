@@ -7,7 +7,7 @@ header("Access-Control-Allow-Methods: POST");
 include("conn/conexion.php");
 
 $nombre = $_POST["input-cliente-nombre"];
-$cif = $_POST["input_cliente_cif"];
+$cif = $_POST["input-cliente-cif"];
 $telefono = $_POST["input-cliente-tlf"];
 $direccion = $_POST["input-cliente-direccion"];
 $idSector = $_POST["select-cliente-sector"];
@@ -18,12 +18,12 @@ nombre = '$nombre',
 cif = '$cif',
 telefono = $telefono,
 direccion = '$direccion',
-id_sector = '$id_sector' WHERE id = $idCliente";
+id_sector = '$idSector' WHERE id = $idCliente";
 $respuesta = mysqli_query($conn,$sqlClienteUpdate);
 if($respuesta){
     $mensaje = "Registro actualizado correctamente";
 
 }else{
-    $mensaje = "Tienes un problema"
+    $mensaje = "Tienes un problema";    
 }
 echo json_encode($mensaje);
