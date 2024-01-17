@@ -12,7 +12,7 @@ $condicion = " WHERE activo = 1 ";
 
 if(isset($_GET["buscar"])){
     $buscar = $_GET["buscar"];
-    $condicion = "WHERE activo = 1 AND (clientes_tb.nombre like '%$buscar%' OR cliente_tb.cif LIKE '%$buscar%' ) ";
+    $condicion = " WHERE activo = 1 AND (clientes_tb.nombre LIKE '%$buscar%' OR clientes_tb.cif LIKE '%$buscar%' ) ";
 }
 
 $limite = " LIMIT $inicio, $porPagina ";
@@ -26,7 +26,7 @@ $respuesta["numero_registros"] = $fila['numero_registros'];
 
 
 
-$sqlClientes = "SELECT clientes_tb.*,clientes_sectores_tb.nombre AS sector FROM `clientes_tb` 
+$sqlClientes = "SELECT clientes_tb.*, clientes_sectores_tb.nombre AS sector FROM clientes_tb 
  LEFT JOIN clientes_sectores_tb ON clientes_tb.id_sector = clientes_sectores_tb.id $condicion $limite";
 $resultadoClientes = mysqli_query($conn,$sqlClientes);
 //var_dump($resultadoClientes);

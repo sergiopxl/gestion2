@@ -11,14 +11,13 @@ function doClientes(){
     const buscadorBoton = document.querySelector("#buscador-boton");
 
     buscadorBoton.addEventListener("click",()=>{
-        if(buscadorInput.value!=""){
-            console.log(paginaActual,buscadorInput.value);
+        if(buscadorInput.value!= ""){
+           getClientes(paginaActual, buscadorInput.value);
         }
     })
     const getClientes = (actual,buscar)=>{
         let parametroBuscar = "";
         let busquedaActiva = false;
-        
         let parametroPorPagina = "&porpagina=" + resultadosPorPagina;
         let inicio;
 
@@ -33,17 +32,19 @@ function doClientes(){
             inicio = (paginaActual -1)* resultadosPorPagina;
         }
         if(buscar && buscar!=""){
-            parametroBuscar = "&buscar" + buscar;
+            parametroBuscar = "&buscar=" + buscar;
             busquedaActiva = true;
             parametroPorPagina = "&porpagina=" + 99999;
         }
 
         const parametroInicio = "?inicio=" + inicio;
         fetch(apiUrlClientesGet+parametroInicio+parametroPorPagina+parametroBuscar, 
-            {method:"GET"}).then((respuesta)=>{
-            respuesta.json().then((clientes)=>{
-             
-                printListaClientes(clientes.numero_registros, clientes.clientes,busquedaActiva);
+            {method:"GET"})
+            .then((respuesta)=>{
+            respuesta.json()
+            .then((clientes)=>{
+               
+         printListaClientes(clientes.numero_registros, clientes.clientes,busquedaActiva);
 
             })
         })
@@ -74,14 +75,14 @@ function doClientes(){
             //contenido)
             clienteContenedor.querySelector(".cliente-datos-nombre").textContent = cliente.nombre;
             clienteContenedor.querySelector(".cliente-datos-cif").txtContent = cliente.cif;
-            clienteContenedor.querySelector(".cliente-datos-nombre").textContent = cliente.telefono;
-            clienteContenedor.querySelector(".cliente-datos-nombre").textContent = cliente.direccion;
+            clienteContenedor.querySelector(".cliente-datos-tlf").textContent = cliente.telefono;
+            clienteContenedor.querySelector(".cliente-datos-direccion").textContent = cliente.direccion;
             clienteContenedor.querySelector(".cliente-datos-sector").textContent = "Sector: " + cliente.sector;
             
 
             //CLONADO DE CONTACTOS
             cliente.contactos.forEach((contacto,index)=>{
-                console.log(cliente.contactos[0])
+                //console.log(cliente.contactos[0])
                 const contactoContenedor = templateContacto.cloneNode(true);
                 contactoContenedor.classList.remove("hidden");
                 //contenido de cada contacto
