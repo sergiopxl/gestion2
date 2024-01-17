@@ -119,7 +119,7 @@ function doClientes(){
         clienteFormularioEdicion.querySelector("[name = 'input-cliente-direccion']").value = cliente.direccion;
 
          getClientesSectores();
-         setContactos();
+        //  setContactos();
          
          
          function getClientesSectores(){
