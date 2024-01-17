@@ -105,8 +105,10 @@ function doClientes(){
      getClientes();
      function doEditar(cliente){
         const bloqueFormulario = document.querySelector("#bloque-formulario").cloneNode(true);
-
+        //const contactosContenedor = document.querySelector()
         const clienteFormularioEdicion = bloqueFormulario.querySelector("#cliente-formulario");
+        const contactosContenedor = bloqueFormulario.querySelector("#cliente-contactos-contenedor-formulario");
+        const contactoFormulario = contactosContenedor.querySelector("form");
 
         const clientesSelectSector = clienteFormularioEdicion.querySelector("[name = 'select-cliente-sector']");
 
@@ -119,7 +121,33 @@ function doClientes(){
         clienteFormularioEdicion.querySelector("[name = 'input-cliente-direccion']").value = cliente.direccion;
 
          getClientesSectores();
-        //  setContactos();
+        setContactos();
+        function setContactos(){
+            cliente.contactos.forEach(contacto => {
+                const nuevoFormularioContacto = contactoFormulario.cloneNode(true);
+                nuevoFormularioContacto.querySelector("[name = 'input-contacto-id']").value = contacto.id;
+                nuevoFormularioContacto.querySelector("[name = 'input-contacto-nombre']").value = contacto.nombre;
+                nuevoFormularioContacto.querySelector("[name = 'input-contacto-apellido1']").value = contacto.apellido1;
+                nuevoFormularioContacto.querySelector("[name = 'input-contacto-apellido2']").value = contacto.apellido2;
+                nuevoFormularioContacto.querySelector("[name = 'input-contacto-telefono']").value = contacto.telefono;
+                nuevoFormularioContacto.querySelector("[name = 'input-contacto-email']").value = contacto.email;
+                const botonEnviar = nuevoFormularioContacto.querySelector("button.enviar");
+                const botonEliminar = nuevoFormularioContacto.querySelector("button.eliminar");
+                botonEnviar.addEventListener("click", (event) =>{
+                    event.preventDefault();
+                    console.log("enviando cambios de contacto", contacto.id );
+                    
+                });
+                botonEliminar.addEventListener("click", (event) =>{
+                    event.preventDefault();
+                    console.log("eliminando contacto", contacto.id);
+                });
+                nuevoFormularioContacto.classList.remove("hidden");
+                contactosContenedor.append(nuevoFormularioContacto);
+            })
+
+        }
+        
          
 
          function getClientesSectores(){
