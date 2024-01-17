@@ -72,6 +72,11 @@ function doClientes(){
             const clientesContactosContenedor = clienteContenedor.querySelector(".cliente-row-contactos");
             const templateContacto = clientesContactosContenedor.querySelector(".contactos-contacto");
 
+            const clienteBotonEditar = clienteContenedor.querySelector(".cliente-botones-editar");
+            clienteBotonEditar.addEventListener("click",() => {
+                doEditar(cliente);
+            });
+
             //contenido)
             clienteContenedor.querySelector(".cliente-datos-nombre").textContent = cliente.nombre;
             clienteContenedor.querySelector(".cliente-datos-cif").txtContent = cliente.cif;
@@ -98,6 +103,31 @@ function doClientes(){
 
      }
      getClientes();
+     function doEditar(cliente){
+        const bloqueFormulario = document.querySelector("#bloque-formulario").cloneNode(true);
+
+        const clienteFormularioEdicion = bloqueFormulario.querySelector("#cliente-formulario");
+
+        const clientesSelectSector = clienteFormularioEdicion.querySelector("[name = 'select-cliente-sector']");
+
+        const botonEnviar = clienteFormularioEdicion.querySelector("#formulario-boton-enviar");
+
+        clienteFormularioEdicion.querySelector("[name = 'input-cliente-id']").value = cliente.id;
+        clienteFormularioEdicion.querySelector("[name = 'input-cliente-nombre']").value = cliente.nombre;
+        clienteFormularioEdicion.querySelector("[name = 'input-cliente-cif']").value = cliente.cif;
+        clienteFormularioEdicion.querySelector("[name = 'input-cliente-tlf']").value = cliente.telefono;
+        clienteFormularioEdicion.querySelector("[name = 'input-cliente-direccion']").value = cliente.direccion;
+
+        // getClientesSectores();
+        // setContactos();
+
+        contenedorListado.innerHTML = "";
+        contenedorListado.append(bloqueFormulario);
+        bloqueFormulario.classList.remove("hidden");
+
+
+
+     }
 
 }
 doClientes();
