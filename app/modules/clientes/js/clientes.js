@@ -118,8 +118,27 @@ function doClientes(){
         clienteFormularioEdicion.querySelector("[name = 'input-cliente-tlf']").value = cliente.telefono;
         clienteFormularioEdicion.querySelector("[name = 'input-cliente-direccion']").value = cliente.direccion;
 
-        // getClientesSectores();
-        // setContactos();
+         getClientesSectores();
+         setContactos();
+         
+         
+         function getClientesSectores(){
+            fetch(apiUrlClientesSectoresGet, {method: "GET"})
+            .then(respuesta => respuesta.json()
+            .then(sectores => {
+                sectores.forEach(sector => {
+                    const opcionSector = document.createElement("option");
+                    opcionSector.value = sector.id;
+                    opcionSector.textContent = sector.nombre;
+                    if(sector.id == cliente.id_sector){
+                        opcionSector.setAttribute("selected","selected");
+
+                    }
+                    clientesSelectSector.append(opcionSector);
+                })
+            })
+            )
+         }
 
         contenedorListado.innerHTML = "";
         contenedorListado.append(bloqueFormulario);
