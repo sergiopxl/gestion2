@@ -76,6 +76,8 @@ function doClientes(){
             clienteContenedor.querySelector(".cliente-datos-cif").txtContent = cliente.cif;
             clienteContenedor.querySelector(".cliente-datos-nombre").textContent = cliente.telefono;
             clienteContenedor.querySelector(".cliente-datos-nombre").textContent = cliente.direccion;
+            clienteContenedor.querySelector(".cliente-datos-sector").textContent = "Sector: " + cliente.sector;
+            
 
             //CLONADO DE CONTACTOS
             cliente.contactos.forEach((contacto,index)=>{
