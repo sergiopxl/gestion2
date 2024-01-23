@@ -10,8 +10,8 @@
         .cliente-datos-nombre{
             background-color: lighten($color-azul, 35%);
         }
-
         
+    
     }
     
     .cliente-row-contactos{
@@ -26,3 +26,6 @@
         background-color: $color-gris-suave;
     }
 }
+#bloque-formulario{
+    display: flex;
+    flex-direction: row;}

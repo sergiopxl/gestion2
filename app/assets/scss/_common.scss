@@ -16,6 +16,9 @@ main{
   width: $wrapper-size;
   margin: auto;
 }
+fieldset{
+  border: 0px;
+}
 .btn-success{
   @include btn($color-success);
 }

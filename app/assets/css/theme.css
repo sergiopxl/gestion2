@@ -20,6 +20,10 @@ main {
   margin: auto;
 }
 
+fieldset {
+  border: 0px;
+}
+
 .btn-success {
   border-radius: 0.3rem;
   max-width: -moz-fit-content;
@@ -127,6 +131,44 @@ main {
   list-style: none;
 }
 
+.modal-contenedor {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0 0 4px #222;
+  padding: 1rem;
+  border-radius: 0.3rem;
+}
+.modal-contenedor .btn-aceptar,
+.modal-contenedor .btn-cancelar {
+  border-radius: 0.3rem;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  padding: 0.3rem 0.5rem;
+  color: white;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 0.5rem;
+}
+.modal-contenedor .btn-aceptar {
+  background-color: #549913;
+  border: 2px solid #549913;
+}
+.modal-contenedor .btn-aceptar:hover {
+  color: #549913;
+  background-color: white;
+}
+.modal-contenedor .btn-cancelar {
+  background-color: #db1139;
+  border: 2px solid #db1139;
+}
+.modal-contenedor .btn-cancelar:hover {
+  color: #db1139;
+  background-color: white;
+}
+
 .cliente-row {
   display: flex;
   gap: 0.5rem;
@@ -147,6 +189,11 @@ main {
 }
 .cliente-row:nth-of-type(odd) {
   background-color: #e2e2e2;
+}
+
+#bloque-formulario {
+  display: flex;
+  flex-direction: row;
 }
 
 #paginacion {

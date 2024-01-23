@@ -38,16 +38,26 @@ function doClientes(){
         }
 
         const parametroInicio = "?inicio=" + inicio;
+        const newLoader = new Loader();
+
         fetch(apiUrlClientesGet+parametroInicio+parametroPorPagina+parametroBuscar, 
             {method:"GET"})
-            .then((respuesta)=>{
-            respuesta.json()
-            .then((clientes)=>{
-               
-         printListaClientes(clientes.numero_registros, clientes.clientes,busquedaActiva);
-
-            })
+        .then((respuesta)=>{
+            if(!respuesta.ok){
+                throw new Error(`Error en la solicitud: ${respuesta.status}`)
+            }
+            return respuesta.json()
         })
+        .then((clientes)=>{
+            printListaClientes(clientes.numero_registros, clientes.clientes,busquedaActiva);
+            newLoader.destroy();
+        }).catch((error)=> {
+            newLoader.destroy();
+            const mensajeError = `Error en la solicitud: <br> ${error} <br> consulte con un servicio`;
+            new Modal(mensajeError, "informacion", "", "")
+        });
+
+        
 
     }
      function printListaClientes(registros, clientes,busqueda){
@@ -106,13 +116,13 @@ function doClientes(){
      function doEditar(cliente){
         const bloqueFormulario = document.querySelector("#bloque-formulario").cloneNode(true);
         //const contactosContenedor = document.querySelector()
-        const clienteFormularioEdicion = bloqueFormulario.querySelector("#cliente-formulario");
-        const contactosContenedor = bloqueFormulario.querySelector("#cliente-contactos-contenedor-formulario");
+        const clienteFormularioEdicion = bloqueFormulario.querySelector(".cliente-formulario");
+        const contactosContenedor = bloqueFormulario.querySelector(".cliente-contactos-contenedor-formulario");
         const contactoFormulario = contactosContenedor.querySelector("form");
 
         const clientesSelectSector = clienteFormularioEdicion.querySelector("[name = 'select-cliente-sector']");
 
-        const botonEnviar = clienteFormularioEdicion.querySelector("#formulario-boton-enviar");
+        const botonEnviar = clienteFormularioEdicion.querySelector(".formulario-boton-enviar");
 
         clienteFormularioEdicion.querySelector("[name = 'input-cliente-id']").value = cliente.id;
         clienteFormularioEdicion.querySelector("[name = 'input-cliente-nombre']").value = cliente.nombre;
@@ -144,7 +154,9 @@ function doClientes(){
                 });
                 nuevoFormularioContacto.classList.remove("hidden");
                 contactosContenedor.append(nuevoFormularioContacto);
+
             })
+            
 
         }
         
@@ -169,13 +181,24 @@ function doClientes(){
          }
          botonEnviar.addEventListener("click", (event) =>{
             event.preventDefault();
+            new Modal ("Seguro que quiere efetuar cambios?", "confirmacion", guardarUpdateCliente, "");
+
+            
+            
+         });
+         
+         function guardarUpdateCliente(){
             const datosFormulario = new FormData(clienteFormularioEdicion);
             fetch(apiUrlClientesUpdate,{ method: "POST", body: datosFormulario})
             .then(response => response.json()
-            .then(data => {
-                console.log(data);
+            .then((data) => {
+                new Modal (data,"Informacion", "", "");
+                
+
             }));
-         });
+         }
+
+        
 
         contenedorListado.innerHTML = "";
         contenedorListado.append(bloqueFormulario);
