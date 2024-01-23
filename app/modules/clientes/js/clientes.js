@@ -11,10 +11,19 @@ function doClientes(){
     const buscadorBoton = document.querySelector("#buscador-boton");
 
     buscadorBoton.addEventListener("click",()=>{
-        if(buscadorInput.value!= ""){
+        if(buscadorInput.value != ""){
            getClientes(paginaActual, buscadorInput.value);
         }
-    })
+    });
+    
+const nuevoClienteBtn = document.querySelector("#nuevo-cliente-btn");
+
+nuevoClienteBtn.addEventListener("click", (event) => {
+    
+    event.preventDefault();
+    doNuevoCliente();
+});
+
     const getClientes = (actual,buscar)=>{
         let parametroBuscar = "";
         let busquedaActiva = false;
@@ -162,23 +171,7 @@ function doClientes(){
         
          
 
-         function getClientesSectores(){
-            fetch(apiUrlClientesSectoresGet, {method: "GET"})
-            .then(respuesta => respuesta.json()
-            .then(sectores => {
-                sectores.forEach(sector => {
-                    const opcionSector = document.createElement("option");
-                    opcionSector.value = sector.id;
-                    opcionSector.textContent = sector.nombre;
-                    if(sector.id == cliente.id_sector){
-                        opcionSector.setAttribute("selected","selected");
-
-                    }
-                    clientesSelectSector.append(opcionSector);
-                })
-            })
-            )
-         }
+         
          botonEnviar.addEventListener("click", (event) =>{
             event.preventDefault();
             new Modal ("Seguro que quiere efetuar cambios?", "confirmacion", guardarUpdateCliente, "");
@@ -213,14 +206,83 @@ function doClientes(){
         contenedorListado.append(bloqueFormulario);
         bloqueFormulario.classList.remove("hidden");
 
+        
 
 
+     }
+
+     function getClientesSectores(clientesSelectSector, clienteIdSector){
+        fetch(apiUrlClientesSectoresGet, {method: "GET"})
+        .then(respuesta => respuesta.json()
+        .then(sectores => {
+            sectores.forEach(sector => {
+                const opcionSector = document.createElement("option");
+                opcionSector.value = sector.id;
+                opcionSector.textContent = sector.nombre;
+                if(clienteIdSector == undefined && sector.id == clienteIdSector){
+                    opcionSector.setAttribute("selected","selected");
+
+                }
+                clientesSelectSector.append(opcionSector);
+            })
+        })
+        )
      }
      function newBloqueFormulario(){
         const bloqueFormulario = document.querySelector("#bloque-formulario");
         bloqueFormulario.id = "";
         bloqueFormulario.classList.add("bloque-formulario");
         return bloqueFormulario;
+     }
+     function doNuevoCliente(){
+
+        const bloqueFormulario = newBloqueFormulario();
+        const clienteFormularioEdicion = bloqueFormulario.querySelector(".cliente-formulario");
+        bloqueFormulario.querySelector(".cliente-contactos-contenedor-formulario").remove();
+
+        const clientesSelectSector = clienteFormularioEdicion.querySelector("[name = 'select-cliente-sector']");
+        const botonNuevoClienteEnviar = clienteFormularioEdicion.querySelector(".formulario-boton-enviar");
+
+        getClientesSectores(clientesSelectSector,"");
+
+        botonNuevoClienteEnviar.addEventListener("click", (e) => {
+            e.preventDefault();
+            new Modal ("Quieres dar de alta a este cliente?", "Confirmacion", guardarNuevoCliente, "");
+
+        });
+
+        
+
+
+
+        contenedorListado.innerHTML = "";
+        contenedorListado.append(bloqueFormulario);
+        bloqueFormulario.classList.remove("hidden");
+
+
+        
+        function guardarNuevoCliente() {
+            const datosFormulario = new FormData(clienteFormularioEdicion);
+
+            fetch(apiUrlClientesPost, {method: "POST", body: datosFormulario})
+            .then((respuesta) => {
+                if(!respuesta.ok) {
+                    throw new Error(`Error en la solicitud: ${respuesta.status}`);
+                }
+                return respuesta.json();
+            })
+            .then((data) => {
+                new Modal(data, "informacion", "", "");
+            })
+            .catch((error) => {
+                const mensajeError = `Error en la solicitud <br> ${error} <br> Consulte con el servicio tecnico MotherFucker`;
+                new Modal(mensajeError,"informacion","","");
+
+            });
+        }
+
+      
+
      }
 
 }
