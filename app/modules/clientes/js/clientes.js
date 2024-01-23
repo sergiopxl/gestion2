@@ -114,7 +114,7 @@ function doClientes(){
      }
      getClientes();
      function doEditar(cliente){
-        const bloqueFormulario = document.querySelector("#bloque-formulario").cloneNode(true);
+        const bloqueFormulario = newBloqueFormulario();
         //const contactosContenedor = document.querySelector()
         const clienteFormularioEdicion = bloqueFormulario.querySelector(".cliente-formulario");
         const contactosContenedor = bloqueFormulario.querySelector(".cliente-contactos-contenedor-formulario");
@@ -139,8 +139,8 @@ function doClientes(){
                 nuevoFormularioContacto.querySelector("[name = 'input-contacto-nombre']").value = contacto.nombre;
                 nuevoFormularioContacto.querySelector("[name = 'input-contacto-apellido1']").value = contacto.apellido1;
                 nuevoFormularioContacto.querySelector("[name = 'input-contacto-apellido2']").value = contacto.apellido2;
-                nuevoFormularioContacto.querySelector("[name = 'input-contacto-telefono']").value = contacto.telefono;
-                nuevoFormularioContacto.querySelector("[name = 'input-contacto-email']").value = contacto.email;
+                nuevoFormularioContacto.querySelector("[name = 'input-contacto-telefono']").value = contacto.telefono1;
+                nuevoFormularioContacto.querySelector("[name = 'input-contacto-email']").value = contacto.email1;
                 const botonEnviar = nuevoFormularioContacto.querySelector("button.enviar");
                 const botonEliminar = nuevoFormularioContacto.querySelector("button.eliminar");
                 botonEnviar.addEventListener("click", (event) =>{
@@ -190,12 +190,21 @@ function doClientes(){
          function guardarUpdateCliente(){
             const datosFormulario = new FormData(clienteFormularioEdicion);
             fetch(apiUrlClientesUpdate,{ method: "POST", body: datosFormulario})
-            .then(response => response.json()
+            .then((response) => {
+                if(!response.ok){
+                    throw new Error(`No se ha podido leer la tabla de contactos: <br> ${respuesta.status}`);
+                }
+                return response.json();
+            })
             .then((data) => {
                 new Modal (data,"Informacion", "", "");
                 
 
-            }));
+            })
+            .catch((error)=>{
+                const mensajeError = `Error en la solicitud: <br> ${error} <br> Consulte con el servicio técnico`;
+                new Modal(mensajeError,"informacion","","");
+            })
          }
 
         
@@ -206,6 +215,12 @@ function doClientes(){
 
 
 
+     }
+     function newBloqueFormulario(){
+        const bloqueFormulario = document.querySelector("#bloque-formulario");
+        bloqueFormulario.id = "";
+        bloqueFormulario.classList.add("bloque-formulario");
+        return bloqueFormulario;
      }
 
 }
