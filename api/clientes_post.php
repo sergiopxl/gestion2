@@ -14,9 +14,9 @@ $idSector = $_POST["select-cliente-sector"];
 
 
 
-$sqlClientesNew = "INSERT INTO `clientes_tb`(`id`, `nombre`, `cif`, `direccion`, `cp`, `provincia`, `poblacion`, `telefono`, `web`, `descripcion`, `cuenta`, `activo`, `id_sector`, `id_origen`, `id_servicio`, `id_usuario`)
+$sqlClientesNew = "INSERT INTO `clientes_tb`( `nombre`, `cif`, `direccion`, `cp`, `provincia`, `poblacion`, `telefono`, `web`, `descripcion`, `cuenta`, `activo`, `id_sector`, `id_origen`, `id_servicio`, `id_usuario`)
 VALUES
-('',$nombre,$cif,$direccion,'','','',$telefono,'','','',1,$idSector,1,1,1)"
+('$nombre','$cif','$direccion','','','','$telefono','','','',1,$idSector,1,1,1)";
 
 $respuesta = mysqli_query($conn,$sqlClientesNew);
 if($respuesta){

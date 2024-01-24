@@ -247,7 +247,7 @@ nuevoClienteBtn.addEventListener("click", (event) => {
 
         botonNuevoClienteEnviar.addEventListener("click", (e) => {
             e.preventDefault();
-            new Modal ("Quieres dar de alta a este cliente?", "Confirmacion", guardarNuevoCliente, "");
+            new Modal ("Quieres dar de alta a este cliente?", "confirmacion", guardarNuevoCliente, "");
 
         });
 

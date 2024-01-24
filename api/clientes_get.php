@@ -27,7 +27,7 @@ $respuesta["numero_registros"] = $fila['numero_registros'];
 
 
 $sqlClientes = "SELECT clientes_tb.*, clientes_sectores_tb.nombre AS sector FROM clientes_tb 
- LEFT JOIN clientes_sectores_tb ON clientes_tb.id_sector = clientes_sectores_tb.id $condicion $limite";
+ LEFT JOIN clientes_sectores_tb ON clientes_tb.id_sector = clientes_sectores_tb.id $condicion ORDER BY clientes_tb.id DESC $limite  ";
 $resultadoClientes = mysqli_query($conn,$sqlClientes);
 //var_dump($resultadoClientes);
 $clientes = [];
