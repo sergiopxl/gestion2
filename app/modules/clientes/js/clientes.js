@@ -139,7 +139,7 @@ nuevoClienteBtn.addEventListener("click", (event) => {
         clienteFormularioEdicion.querySelector("[name = 'input-cliente-tlf']").value = cliente.telefono;
         clienteFormularioEdicion.querySelector("[name = 'input-cliente-direccion']").value = cliente.direccion;
 
-         getClientesSectores();
+         getClientesSectores(clientesSelectSector,cliente.id_sector);
         setContactos();
         function setContactos(){
             cliente.contactos.forEach(contacto => {
@@ -179,6 +179,42 @@ nuevoClienteBtn.addEventListener("click", (event) => {
             
             
          });
+            const contactoNuevoBtn= document.querySelector(".nuevo-contacto-boton")
+            contactoNuevoBtn.addEventListener("click",(e)=> {
+            e.preventDefault();
+            const formularioNuevoContacto = contactoFormulario.cloneNode(true);
+            formularioNuevoContacto.classList.remove("hidden");
+            const botonEnviarContactoNuevo = formularioNuevoContacto.querySelector("button.enviar");
+            contactoNuevoBtn.after(formularioNuevoContacto,contactosContenedor.querySelector("form"));
+            formularioNuevoContacto.querySelector("button.eliminar").remove();
+            formularioNuevoContacto.querySelector("[name='input-contacto-cliente-id']").value = cliente.id;
+            botonEnviarContactoNuevo.addEventListener("click", (e) => {
+                e.preventDefault();
+              new Modal("¿Quieres guardar este contacto?", "confirmacion", guardarNuevoContacto, formularioNuevoContacto);
+                console.log("enviando cambios de contacto id cliente: ",cliente.id);
+
+            });
+         });
+         function guardarNuevoContacto(formularioNuevoContacto){
+            const datosFormulario = new FormData(formularioNuevoContacto);
+            fetch(apiUrlClientesUpdate,{ method: "POST", body: datosFormulario})
+            .then((response) => {
+                if(!response.ok){
+                    throw new Error(`No se ha podido leer la tabla de contactos: <br> ${respuesta.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                new Modal (data,"Informacion", "", "");
+                
+
+            })
+            .catch((error)=>{
+                const mensajeError = `Error en la solicitud: <br> ${error} <br> Consulte con el servicio técnico`;
+                new Modal(mensajeError,"informacion","","");
+            })
+
+         }
          
          function guardarUpdateCliente(){
             const datosFormulario = new FormData(clienteFormularioEdicion);
