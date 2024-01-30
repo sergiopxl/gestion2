@@ -24,6 +24,12 @@ function doNavigation(){
       literal : "informes",
       url : "../../modules/informes/index.html"
     },
+    {
+      literal : "proveedores",
+      url : "../../modules/proveedores/index.html"
+    },
+
+
   ];
   const navegacionContenedor = document.querySelector("#navegacion-principal ul");
 

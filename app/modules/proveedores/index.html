@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion | Clientes</title>
+  <script src="../../assets/js/api_roots.js"></script>
+  <script src="../../assets/js/navigation.js" defer></script>
+  <script src="js/clientes.js" defer></script>
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+  <script src="../../assets/js/paginacion.js"></script>
+  <script src="../../assets/js/loader.js"></script>
+  <script src="../../assets/js/modal.js"></script>
+</head>
+<body>
+  <header id="header-pagina">
+    <nav id="navegacion-principal">
+      <ul></ul>
+    </nav>
+  </header>
+  <div id="acciones" class="acciones-pagina">
+    <div id="nuevo-cliente-btn" class="btn-success">Nuevo Proveedor</div> <!-- Boton con funcion de agregar un proveedor.La funcion hecha en proveedores.js tiene un evento cuando hago clic en el boton que tiene como id "nuevoProveedorBtn" donde se ejecuta la funcion doNuevoProveedor y utilizo event.preventDefault para evitar la accion quehace por default el botn, solo quiero que  haga la que yo le pedi -->
+    <div id="paginacion"><!-- Aqui la paginacion -->
+      <div class="elemento-paginacion">1</div>
+      <div class="elemento-paginacion">2</div>
+      <div class="elemento-paginacion">3</div>
+      <div class="elemento-paginacion">4</div>
+      <div class="elemento-paginacion">5</div>
+      <div class="elemento-paginacion">6</div>
+      <div class="elemento-paginacion">7</div>
+      <div class="elemento-paginacion">8</div>
+      <div class="elemento-paginacion">9</div>
+      <div class="elemento-paginacion">10</div>
+      
+    </div>
+
+    <div id="buscador">
+        <input type="text" id="buscador-input"><!-- Aqui el input es de tipo texto y el ID "buscador-input" lo que hace en JS es mediante el metodo querySelector buscar en el DOCUMENT(todo el index) los atributos y los guarda en "buscadorInput" -->
+        <button class="btn-info" id="buscador-boton">Buscar</button><!-- Aqui lo mismo, pero con "buscador-boton" que lo va a guardar en "buscadorBoton"
+        Y luego buscadorBoton.addEventListener le decimos que cuando haga click si buscadorInput no esta vacio que use getClientes(este metodo que llama a la api hecha en PHP, ella es quien hace la consulta a la bbdd)-->
+      </div>
+    </div>
+    <h1 id="h1-apartado">Proveedores</h1>
+
+    <main>
+
+    
+    
+    </main>
+
+    <div id="bloque-formulario" class="">
+        <form action="" method="post" class="cliente-formulario">
+          <input type="hidden" name="input-cliente-id">
+          <fieldset>
+            <label for="input-cliente-nombre">Nombre</label>
+            <input type="text" name="input-cliente-nombre" required="required">
+          </fieldset>
+          <fieldset>
+            <label for="input-cliente-cif">CIF</label>
+            <input type="text" name="input-cliente-cif" required="required">
+          </fieldset>
+          <fieldset>
+            <label for="input-cliente-tlf">Telefono</label>
+            <input type="text" name="input-cliente-tlf" required="required">
+          </fieldset>
+          <fieldset>
+            <label for="input-cliente-direccion">Direccion</label>
+            <input type="text" name="input-cliente-direccion" required="required">
+          </fieldset>
+          <fieldset>
+            <label for="select-cliente-sector">Sector</label>
+            <select type="text" name="select-cliente-sector" required="required">
+              <option value="0" selected disabled>Seleccione un sector</option></select>
+          </fieldset><button class="btn-success formulario-boton-enviar">Guardar cambios</button>
+        </form>
+        <div class="cliente-contactos-contenedor-formulario">
+          <button class="btn-info nuevo-contacto-boton">Nuevo contacto</button>
+          <form action="" class="cliente-contactos-form hidden">
+            <input type="hidden" name="input-contacto-id">
+    
+            
+    
+            <input type="hidden" name="input-contacto-cliente-id">
+    
+            <fieldset>
+              <label for="input-contacto-nombre">Nombre</label>
+              <input type="text" name="input-contacto-nombre">
+            </fieldset>
+            <fieldset>
+              <label for="input-contacto-apellido1">Primer apellido</label>
+              <input type="text" name="input-contacto-apellido1">
+            </fieldset>
+            <fieldset>
+              <label for="input-contacto-apellido2">Segundo apellido</label>
+              <input type="text" name="input-contacto-apellido2">
+            </fieldset>
+            <fieldset>
+              <label for="input-contacto-telefono">Telefono</label>
+              <input type="text" name="input-contacto-telefono">
+            </fieldset>
+            <fieldset>
+              <label for="input-contacto-email">Email</label>
+              <input type="text" name="input-contacto-email">
+            </fieldset>
+            <button class="btn-success enviar">Guardar cambios</button>
+            <button class="btn-error eliminar">Eliminar contacto</button>
+          </form>
+        </div>
+      </div>
+
