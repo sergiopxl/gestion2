@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestion | Clientes</title>
-  <script src="../../assets/js/api_roots.js"></script>
-  <script src="../../assets/js/navigation.js" defer></script>
-  <script src="js/clientes.js" defer></script>
+  <title>Gestion | Proveedores</title>
   <link rel="stylesheet" href="../../assets/css/theme.css">
+
+  <script src="../../assets/js/api_roots.js"></script>
   <script src="../../assets/js/paginacion.js"></script>
   <script src="../../assets/js/loader.js"></script>
   <script src="../../assets/js/modal.js"></script>
+  <script src="../../assets/js/navigation.js" defer></script>
+  <script src="js/proveedores.js" defer></script>
 </head>
 <body>
   <header id="header-pagina">
@@ -48,63 +49,28 @@
     
     </main>
 
-    <div id="bloque-formulario" class="">
-        <form action="" method="post" class="cliente-formulario">
-          <input type="hidden" name="input-cliente-id">
-          <fieldset>
-            <label for="input-cliente-nombre">Nombre</label>
-            <input type="text" name="input-cliente-nombre" required="required">
-          </fieldset>
-          <fieldset>
-            <label for="input-cliente-cif">CIF</label>
-            <input type="text" name="input-cliente-cif" required="required">
-          </fieldset>
-          <fieldset>
-            <label for="input-cliente-tlf">Telefono</label>
-            <input type="text" name="input-cliente-tlf" required="required">
-          </fieldset>
-          <fieldset>
-            <label for="input-cliente-direccion">Direccion</label>
-            <input type="text" name="input-cliente-direccion" required="required">
-          </fieldset>
-          <fieldset>
-            <label for="select-cliente-sector">Sector</label>
-            <select type="text" name="select-cliente-sector" required="required">
-              <option value="0" selected disabled>Seleccione un sector</option></select>
-          </fieldset><button class="btn-success formulario-boton-enviar">Guardar cambios</button>
-        </form>
-        <div class="cliente-contactos-contenedor-formulario">
-          <button class="btn-info nuevo-contacto-boton">Nuevo contacto</button>
-          <form action="" class="cliente-contactos-form hidden">
-            <input type="hidden" name="input-contacto-id">
-    
+
+      <div id="proveedor-row" class=" hidden">
+        <div class="proveedor-datos">
+          <p class="proveedor-datos-nombre">Nombre</p>
+          <p class="proveedor-datos-cif">b000000</p>
+          <p class="proveedor-datos-tlf">91000000</p>
+          <p class="proveedor-datos-direccion">C/mayor 1 Madrid Madrid 28001</p>
+          <p class="proveedor-datos-servicio"></p>
+        </div>
+        <div class="proveedor-proveedores">
+          <div class="proveedor-botones"> 
+            <button class="btn-info proveedor-botones-editar">editar</button>
+            <button class="btn-info proveedor-botones-factura">nueva factura</button>
             
-    
-            <input type="hidden" name="input-contacto-cliente-id">
-    
-            <fieldset>
-              <label for="input-contacto-nombre">Nombre</label>
-              <input type="text" name="input-contacto-nombre">
-            </fieldset>
-            <fieldset>
-              <label for="input-contacto-apellido1">Primer apellido</label>
-              <input type="text" name="input-contacto-apellido1">
-            </fieldset>
-            <fieldset>
-              <label for="input-contacto-apellido2">Segundo apellido</label>
-              <input type="text" name="input-contacto-apellido2">
-            </fieldset>
-            <fieldset>
-              <label for="input-contacto-telefono">Telefono</label>
-              <input type="text" name="input-contacto-telefono">
-            </fieldset>
-            <fieldset>
-              <label for="input-contacto-email">Email</label>
-              <input type="text" name="input-contacto-email">
-            </fieldset>
-            <button class="btn-success enviar">Guardar cambios</button>
-            <button class="btn-error eliminar">Eliminar contacto</button>
-          </form>
+          </div>
+          <div class="proveedores-contactos">
+            <div class="contacto-template">
+              <p class="contacto-nombre">Sergio Gonzalez</p>
+              <p class="contacto-tlf">60000000</p>
+              <p class="contacto-email">sergio@gmail.com</p>
+            </div>
+          </div>
         </div>
       </div>
-
+</body>

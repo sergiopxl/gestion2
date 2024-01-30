@@ -1,79 +1,90 @@
 "use strict";
-console.log("clientes.js 1.2");
-function doClientes(){
+console.log("proveedores.js 1.2");
+function doProveedores() {
+    console.log("paso1")
     let paginaActual = 1;
     const resultadosPorPagina = 20;
 
     const contenedorListado = document.querySelector("main");
-    const templateCliente = document.querySelector(".cliente-row");
+    const templateProveedor = document.querySelector("#proveedor-row");
 
     const buscadorInput = document.querySelector("#buscador-input");
     const buscadorBoton = document.querySelector("#buscador-boton");
 
-    buscadorBoton.addEventListener("click",()=>{
-        if(buscadorInput.value != ""){
-           getClientes(paginaActual, buscadorInput.value);
+    buscadorBoton.addEventListener("click", ()=>{
+        if (buscadorInput.value != "") {
+            getProveedores(paginaActual, buscadorInput.value);
+            
         }
+    } );
+
+    const nuevoProveedorBtn = document.querySelector("#nuevo-proveedor-btn");
+/*
+    nuevoProveedorBtn.addEventListener("click", (event) => {
+
+        event.preventDefault();
+        doNuevoProveedor();
     });
-    
-const nuevoClienteBtn = document.querySelector("#nuevo-cliente-btn");
-
-nuevoClienteBtn.addEventListener("click", (event) => {
-    
-    event.preventDefault();
-    doNuevoCliente();
-});
-
-    const getClientes = (actual,buscar)=>{
+*/
+    const getProveedores = (actual,buscar)=>{
+        console.log("paso2");
         let parametroBuscar = "";
         let busquedaActiva = false;
         let parametroPorPagina = "&porpagina=" + resultadosPorPagina;
         let inicio;
 
-        if (actual){
+        if (actual) {
             paginaActual = actual;
+
             
         }
         if (paginaActual==1) {
             inicio = 0;
+
             
         }else{
             inicio = (paginaActual -1)* resultadosPorPagina;
         }
-        if(buscar && buscar!=""){
-            parametroBuscar = "&buscar=" + buscar;
+        if (buscar && buscar!= "") {
+            parametroBuscar = "&buscar" + buscar;
             busquedaActiva = true;
             parametroPorPagina = "&porpagina=" + 99999;
+            
         }
-
         const parametroInicio = "?inicio=" + inicio;
         const newLoader = new Loader();
-
-        fetch(apiUrlClientesGet+parametroInicio+parametroPorPagina+parametroBuscar, 
+        
+        fetch(apiUrlProveedoresGet+parametroInicio+parametroPorPagina+parametroBuscar,
             {method:"GET"})
-        .then((respuesta)=>{
-            if(!respuesta.ok){
-                throw new Error(`Error en la solicitud: ${respuesta.status}`)
-            }
-            return respuesta.json()
-        })
-        .then((clientes)=>{
-            printListaClientes(clientes.numero_registros, clientes.clientes,busquedaActiva);
-            newLoader.destroy();
-        }).catch((error)=> {
-            newLoader.destroy();
-            const mensajeError = `Error en la solicitud: <br> ${error} <br> consulte con un servicio`;
-            new Modal(mensajeError, "informacion", "", "")
-        });
+            .then((respuesta)=>{
+                if (!respuesta.ok) {
+                    throw new Error(`Error en la solicitud: ${respuesta.status}`)
+
+                    
+                }
+                return respuesta.json()
+                
+            })
+            .then((proveedores)=>{
+                printListaProveedores(proveedores.numero_registros, proveedores.proveedores, busquedaActiva);
+                newLoader.destroy();
+            }).catch((error)=>{
+                newLoader.destroy();
+                const mensajeError = `Error en la solicitud: <br> ${error} <br> consulte con el servicio tecnico mi rey`;
+                new Modal(mensajeError, "informacion", "", "")
+            });
 
         
 
+            
     }
-     function printListaClientes(registros, clientes,busqueda){
+    function printListaProveedores(registros, proveedores, busqueda) {
+        console.log("paso3");
         contenedorListado.innerHTML = "";
-        if(!busqueda){
-        doPaginacion (paginaActual, resultadosPorPagina, registros, getClientes);
+        if (!busqueda) {
+            doPaginacion(paginaActual, resultadosPorPagina, registros, getProveedores);
 
+            
         }else{
             const verTodosBoton = document.createElement("button");
             verTodosBoton.classList.add("btn-info");
@@ -81,245 +92,44 @@ nuevoClienteBtn.addEventListener("click", (event) => {
             verTodosBoton.addEventListener("click",()=>{
                 getClientes();
             })
-            document.querySelector("#paginacion").innerHTML = "<h2>Resultados busqueda:"+clientes.length+" </h2>" ;
+            document.querySelector("#paginacion").innerHTML = "<h2>Resultados busqueda:"+proveedores.length+" </h2>" ;
             document.querySelector("#paginacion").append(verTodosBoton);
 
+
         }
-        clientes.forEach(cliente=>{
-            const clienteContenedor = templateCliente.cloneNode(true);
-            clienteContenedor.classList.remove("hidden");
-            const clientesContactosContenedor = clienteContenedor.querySelector(".cliente-row-contactos");
-            const templateContacto = clientesContactosContenedor.querySelector(".contactos-contacto");
-
-            const clienteBotonEditar = clienteContenedor.querySelector(".cliente-botones-editar");
-            clienteBotonEditar.addEventListener("click",() => {
-                doEditar(cliente);
-            });
-
-            
-            clienteContenedor.querySelector(".cliente-datos-nombre").textContent = cliente.nombre;
-            clienteContenedor.querySelector(".cliente-datos-cif").txtContent = cliente.cif;
-            clienteContenedor.querySelector(".cliente-datos-tlf").textContent = cliente.telefono;
-            clienteContenedor.querySelector(".cliente-datos-direccion").textContent = cliente.direccion;
-            clienteContenedor.querySelector(".cliente-datos-sector").textContent = "Sector: " + cliente.sector;
-            
-
-            
-            cliente.contactos.forEach((contacto,index)=>{
+        proveedores.forEach(proveedor => {
+            console.log(proveedor);
+           
+            const proveedorContenedor = templateProveedor.cloneNode(true);
+            proveedorContenedor.id ="";
+            proveedorContenedor.classList.add("proveedor-row");
+            proveedorContenedor.classList.remove("hidden");
+            const proveedoresContactosContenedor = proveedorContenedor.querySelector(".proveedores-contactos");
+         
+            proveedor.contactos.forEach(contacto=>{
+                const templateContacto = proveedoresContactosContenedor.querySelector(".contacto-template").cloneNode(true);
+                templateContacto.querySelector(".contacto-nombre").textContent = contacto.nombre;
+                templateContacto.querySelector(".contacto-tlf").textContent = contacto.telefono;
+                templateContacto.querySelector(".contacto-email").textContent = contacto.email;
                 
-                const contactoContenedor = templateContacto.cloneNode(true);
-                contactoContenedor.classList.remove("hidden");
-                
-                contactoContenedor.querySelector(".contacto-nombre").textContent = contacto.nombre + " "+contacto.apellido1 + " "+contacto.apellido2;
-                contactoContenedor.querySelector(".contacto-tlf").textContent = contacto.telefono1;
-                contactoContenedor.querySelector(".contacto-email").textContent = contacto.email1;
-                clientesContactosContenedor.append(contactoContenedor)
             })
-            
-            
-            contenedorListado.append(clienteContenedor);
+            // const proveedorBotonEditar = proveedorContenedor.querySelector(".proveedor-botones-editar");
+
+            // const proveedorBotonEditar = proveedoreContenedor.querySelector(".cliente-botones-editar");
+            // proveedorBotonEditar.addEventListener("click",() => {
+            //     doEditar(cliente);
+        proveedorContenedor.querySelector(".proveedor-datos-nombre").textContent = proveedor.nombre;
+        proveedorContenedor.querySelector(".proveedor-datos-cif").textContent = proveedor.cif;
+        proveedorContenedor.querySelector(".proveedor-datos-tlf").textContent = proveedor.telefono;
+        proveedorContenedor.querySelector(".proveedor-datos-direccion").textContent = proveedor.direccion;
+        proveedorContenedor.querySelector(".proveedor-datos-servicio").textContent = "Servicio: " + proveedor.servicio;
+
+        contenedorListado.append(proveedorContenedor);
         });
 
-     }
-     getClientes();
-     function doEditar(cliente){
-        const bloqueFormulario = newBloqueFormulario();
+  
         
-        const clienteFormularioEdicion = bloqueFormulario.querySelector(".cliente-formulario");
-        const contactosContenedor = bloqueFormulario.querySelector(".cliente-contactos-contenedor-formulario");
-        const contactoFormulario = contactosContenedor.querySelector("form");
-
-        const clientesSelectSector = clienteFormularioEdicion.querySelector("[name = 'select-cliente-sector']");
-
-        const botonEnviar = clienteFormularioEdicion.querySelector(".formulario-boton-enviar");
-
-        clienteFormularioEdicion.querySelector("[name = 'input-cliente-id']").value = cliente.id;
-        clienteFormularioEdicion.querySelector("[name = 'input-cliente-nombre']").value = cliente.nombre;
-        clienteFormularioEdicion.querySelector("[name = 'input-cliente-cif']").value = cliente.cif;
-        clienteFormularioEdicion.querySelector("[name = 'input-cliente-tlf']").value = cliente.telefono;
-        clienteFormularioEdicion.querySelector("[name = 'input-cliente-direccion']").value = cliente.direccion;
-
-         getClientesSectores(clientesSelectSector,cliente.id_sector);
-        setContactos();
-        function setContactos(){
-            cliente.contactos.forEach(contacto => {
-                const nuevoFormularioContacto = contactoFormulario.cloneNode(true);
-                nuevoFormularioContacto.querySelector("[name = 'input-contacto-id']").value = contacto.id;
-                nuevoFormularioContacto.querySelector("[name = 'input-contacto-nombre']").value = contacto.nombre;
-                nuevoFormularioContacto.querySelector("[name = 'input-contacto-apellido1']").value = contacto.apellido1;
-                nuevoFormularioContacto.querySelector("[name = 'input-contacto-apellido2']").value = contacto.apellido2;
-                nuevoFormularioContacto.querySelector("[name = 'input-contacto-telefono']").value = contacto.telefono1;
-                nuevoFormularioContacto.querySelector("[name = 'input-contacto-email']").value = contacto.email1;
-                const botonEnviar = nuevoFormularioContacto.querySelector("button.enviar");
-                const botonEliminar = nuevoFormularioContacto.querySelector("button.eliminar");
-                botonEnviar.addEventListener("click", (event) =>{
-                    event.preventDefault();
-                    console.log("enviando cambios de contacto", contacto.id );
-                    
-                });
-                botonEliminar.addEventListener("click", (event) =>{
-                    event.preventDefault();
-                    console.log("eliminando contacto", contacto.id);
-                });
-                nuevoFormularioContacto.classList.remove("hidden");
-                contactosContenedor.append(nuevoFormularioContacto);
-
-            })
-            
-
-        }
-        
-         
-
-         
-         botonEnviar.addEventListener("click", (event) =>{
-            event.preventDefault();
-            new Modal ("Seguro que quiere efetuar cambios?", "confirmacion", guardarUpdateCliente, "");
-
-            
-            
-         });
-            const contactoNuevoBtn= document.querySelector(".nuevo-contacto-boton")
-            contactoNuevoBtn.addEventListener("click",(e)=> {
-            e.preventDefault();
-            const formularioNuevoContacto = contactoFormulario.cloneNode(true);
-            formularioNuevoContacto.classList.remove("hidden");
-            const botonEnviarContactoNuevo = formularioNuevoContacto.querySelector("button.enviar");
-            contactoNuevoBtn.after(formularioNuevoContacto,contactosContenedor.querySelector("form"));
-            formularioNuevoContacto.querySelector("button.eliminar").remove();
-            formularioNuevoContacto.querySelector("[name='input-contacto-cliente-id']").value = cliente.id;
-            botonEnviarContactoNuevo.addEventListener("click", (e) => {
-                e.preventDefault();
-              new Modal("¿Quieres guardar este contacto?", "confirmacion", guardarNuevoContacto, formularioNuevoContacto);
-                console.log("enviando cambios de contacto id cliente: ",cliente.id);
-
-            });
-         });
-         function guardarNuevoContacto(formularioNuevoContacto){
-            const datosFormulario = new FormData(formularioNuevoContacto);
-            fetch(apiUrlClientesUpdate,{ method: "POST", body: datosFormulario})
-            .then((response) => {
-                if(!response.ok){
-                    throw new Error(`No se ha podido leer la tabla de contactos: <br> ${respuesta.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                new Modal (data,"Informacion", "", "");
-                
-
-            })
-            .catch((error)=>{
-                const mensajeError = `Error en la solicitud: <br> ${error} <br> Consulte con el servicio técnico`;
-                new Modal(mensajeError,"informacion","","");
-            })
-
-         }
-         
-         function guardarUpdateCliente(){
-            const datosFormulario = new FormData(clienteFormularioEdicion);
-            fetch(apiUrlClientesUpdate,{ method: "POST", body: datosFormulario})
-            .then((response) => {
-                if(!response.ok){
-                    throw new Error(`No se ha podido leer la tabla de contactos: <br> ${respuesta.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                new Modal (data,"Informacion", "", "");
-                
-
-            })
-            .catch((error)=>{
-                const mensajeError = `Error en la solicitud: <br> ${error} <br> Consulte con el servicio técnico`;
-                new Modal(mensajeError,"informacion","","");
-            })
-         }
-
-        
-
-        contenedorListado.innerHTML = "";
-        contenedorListado.append(bloqueFormulario);
-        bloqueFormulario.classList.remove("hidden");
-
-        
-
-
-     }
-
-     function getClientesSectores(clientesSelectSector, clienteIdSector){
-        fetch(apiUrlClientesSectoresGet, {method: "GET"})
-        .then(respuesta => respuesta.json()
-        .then(sectores => {
-            sectores.forEach(sector => {
-                const opcionSector = document.createElement("option");
-                opcionSector.value = sector.id;
-                opcionSector.textContent = sector.nombre;
-                if(clienteIdSector == undefined && sector.id == clienteIdSector){
-                    opcionSector.setAttribute("selected","selected");
-
-                }
-                clientesSelectSector.append(opcionSector);
-            })
-        })
-        )
-     }
-     function newBloqueFormulario(){
-        const bloqueFormulario = document.querySelector("#bloque-formulario");
-        bloqueFormulario.id = "";
-        bloqueFormulario.classList.add("bloque-formulario");
-        return bloqueFormulario;
-     }
-     function doNuevoCliente(){
-
-        const bloqueFormulario = newBloqueFormulario();
-        const clienteFormularioEdicion = bloqueFormulario.querySelector(".cliente-formulario");
-        bloqueFormulario.querySelector(".cliente-contactos-contenedor-formulario").remove();
-
-        const clientesSelectSector = clienteFormularioEdicion.querySelector("[name = 'select-cliente-sector']");
-        const botonNuevoClienteEnviar = clienteFormularioEdicion.querySelector(".formulario-boton-enviar");
-
-        getClientesSectores(clientesSelectSector,"");
-
-        botonNuevoClienteEnviar.addEventListener("click", (e) => {
-            e.preventDefault();
-            new Modal ("Quieres dar de alta a este cliente?", "confirmacion", guardarNuevoCliente, "");
-
-        });
-
-        
-
-
-
-        contenedorListado.innerHTML = "";
-        contenedorListado.append(bloqueFormulario);
-        bloqueFormulario.classList.remove("hidden");
-
-
-        
-        function guardarNuevoCliente() {
-            const datosFormulario = new FormData(clienteFormularioEdicion);
-
-            fetch(apiUrlClientesPost, {method: "POST", body: datosFormulario})
-            .then((respuesta) => {
-                if(!respuesta.ok) {
-                    throw new Error(`Error en la solicitud: ${respuesta.status}`);
-                }
-                return respuesta.json();
-            })
-            .then((data) => {
-                new Modal(data, "informacion", "", "");
-            })
-            .catch((error) => {
-                const mensajeError = `Error en la solicitud <br> ${error} <br> Consulte con el servicio tecnico MotherFucker`;
-                new Modal(mensajeError,"informacion","","");
-
-            });
-        }
-
-      
-
-     }
-
+    }
+getProveedores();
 }
-doClientes();
+doProveedores();

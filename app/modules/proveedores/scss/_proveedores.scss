@@ -1,0 +1,31 @@
+.proveedor-row{
+    display: flex;
+    gap: .5rem;
+    border: 1px solid black;
+    
+
+    .proveedor-datos{
+        flex-basis: 30%;
+        padding: .5rem 1rem;
+        .proveedor-datos-nombre{
+            background-color: lighten($color-azul, 35%);
+        }
+        
+    
+    }
+    
+    .proveedores-contactos{
+        flex-grow: 1;
+        flex-shrink: 0;
+        padding: .5rem 1rem;
+        border-left: 1px dashed $color-gris-medio;
+            
+
+    }
+    &:nth-of-type(odd){
+        background-color: $color-gris-suave;
+    }
+}
+#bloque-formulario{
+    display: flex;
+    flex-direction: row;}

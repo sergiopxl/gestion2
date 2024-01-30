@@ -16,7 +16,7 @@ if(isset($_GET["buscar"])){
     $condicion = " WHERE proveedores_tb.nombre LIKE '%".$buscar."%' OR proveedores_tb.cif LIKE '%".$buscar."%' ";
 }
 
-$sqlProveedores="SELECT proveedores_tb.*,proveedores_servicios_tb.name AS sevicio FROM proveedores_tb  
+$sqlProveedores="SELECT proveedores_tb.*,proveedores_servicios_tb.name AS servicio FROM proveedores_tb  
 LEFT JOIN proveedores_servicios_tb ON proveedores_tb.id_servicio = proveedores_servicios_tb.id $condicion ORDER BY proveedores_tb.id DESC $limite  ";
 $respuestaProveedores = mysqli_query($conn,$sqlProveedores);
 
