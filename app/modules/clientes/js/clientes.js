@@ -121,7 +121,21 @@ nuevoClienteBtn.addEventListener("click", (event) => {
         });
 
      }
-     getClientes();
+     
+     
+
+
+
+
+
+
+
+
+
+
+
+
+     
      function doEditar(cliente){
         const bloqueFormulario = newBloqueFormulario();
         //const contactosContenedor = document.querySelector()

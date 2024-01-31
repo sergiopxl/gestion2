@@ -1,7 +1,7 @@
 "use strict";
 console.log("proveedores.js 1.2");
 function doProveedores() {
-    console.log("paso1")
+    
     let paginaActual = 1;
     const resultadosPorPagina = 20;
 
@@ -27,7 +27,7 @@ function doProveedores() {
     });
 */
     const getProveedores = (actual,buscar)=>{
-        console.log("paso2");
+       
         let parametroBuscar = "";
         let busquedaActiva = false;
         let parametroPorPagina = "&porpagina=" + resultadosPorPagina;
@@ -79,7 +79,7 @@ function doProveedores() {
             
     }
     function printListaProveedores(registros, proveedores, busqueda) {
-        console.log("paso3");
+        
         contenedorListado.innerHTML = "";
         if (!busqueda) {
             doPaginacion(paginaActual, resultadosPorPagina, registros, getProveedores);
@@ -98,7 +98,7 @@ function doProveedores() {
 
         }
         proveedores.forEach(proveedor => {
-            console.log(proveedor);
+            
            
             const proveedorContenedor = templateProveedor.cloneNode(true);
             proveedorContenedor.id ="";
@@ -107,11 +107,14 @@ function doProveedores() {
             const proveedoresContactosContenedor = proveedorContenedor.querySelector(".proveedores-contactos");
          
             proveedor.contactos.forEach(contacto=>{
-                const templateContacto = proveedoresContactosContenedor.querySelector(".contacto-template").cloneNode(true);
-                templateContacto.querySelector(".contacto-nombre").textContent = contacto.nombre;
-                templateContacto.querySelector(".contacto-tlf").textContent = contacto.telefono;
-                templateContacto.querySelector(".contacto-email").textContent = contacto.email;
                 
+                const templateContacto = proveedoresContactosContenedor.querySelector(".contacto-template").cloneNode(true);
+                
+                templateContacto.classList.remove("hidden","contacto-template");
+                templateContacto.querySelector(".contacto-nombre").textContent = contacto.name;
+                templateContacto.querySelector(".contacto-tlf").textContent = contacto.phone1;
+                templateContacto.querySelector(".contacto-email").textContent = contacto.mail1;
+                proveedoresContactosContenedor.append(templateContacto);
             })
             // const proveedorBotonEditar = proveedorContenedor.querySelector(".proveedor-botones-editar");
 
@@ -125,6 +128,8 @@ function doProveedores() {
         proveedorContenedor.querySelector(".proveedor-datos-servicio").textContent = "Servicio: " + proveedor.servicio;
 
         contenedorListado.append(proveedorContenedor);
+
+
         });
 
   
