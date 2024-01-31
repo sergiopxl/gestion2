@@ -10,6 +10,12 @@ function doProveedores() {
 
     const buscadorInput = document.querySelector("#buscador-input");
     const buscadorBoton = document.querySelector("#buscador-boton");
+    const proveedorNuevoBtn = document.querySelector("#nuevo-proveedor-btn");
+
+    proveedorNuevoBtn.addEventListener("click", ()=>{
+        doNuevoProveedor();
+
+    })
 
     buscadorBoton.addEventListener("click", ()=>{
         if (buscadorInput.value != "") {
@@ -17,6 +23,7 @@ function doProveedores() {
             
         }
     } );
+
 
     const nuevoProveedorBtn = document.querySelector("#nuevo-proveedor-btn");
 /*
@@ -136,5 +143,79 @@ function doProveedores() {
         
     }
 getProveedores();
+//metodo para servicios
+function getProveedoresServicios(proveedoresSelectServicio, proveedorIdServicio){
+    fetch(apiUrlProveedoresServiciosGet, {method: "GET"})
+    .then(respuesta => respuesta.json()
+    .then(servicios => {
+        servicios.forEach(servicio => {
+            const opcionServicio = document.createElement("option");
+            opcionServicio.value = servicio.id;
+            opcionServicio.textContent = servicio.name;
+            if(proveedorIdServicio == undefined && servicio.id == servicioIdServicio){
+                opcionSector.setAttribute("selected","selected");
+
+            }
+            proveedoresSelectServicio.append(opcionServicio);
+        })
+    })
+    )
+ }
+ function newBloqueFormulario(){
+    const bloqueFormulario = document.querySelector("#bloque-formulario");
+    bloqueFormulario.id = "";
+    bloqueFormulario.classList.add("bloque-formulario");
+    return bloqueFormulario;
+ }
+ function doNuevoProveedor(){
+
+    const bloqueFormulario = newBloqueFormulario();
+    const proveedorFormularioEdicion = bloqueFormulario.querySelector(".proveedor-formulario");
+    bloqueFormulario.querySelector(".proveedor-contactos-contenedor-formulario").remove();
+
+    const proveedoresSelectServicio = proveedorFormularioEdicion.querySelector("[name = 'select-proveedor-servicio']");
+    const botonNuevoProveedorEnviar = proveedorFormularioEdicion.querySelector(".formulario-boton-enviar");
+
+    getProveedoresServicios(proveedoresSelectServicio,"");
+
+    botonNuevoProveedorEnviar.addEventListener("click", (e) => {
+        e.preventDefault();
+        new Modal ("Quieres dar de alta a este proveedor?", "confirmacion", guardarNuevoProveedor, proveedorFormularioEdicion);
+
+    });
+    
+       
+
+    contenedorListado.innerHTML = "";
+    contenedorListado.append(bloqueFormulario);
+    bloqueFormulario.classList.remove("hidden");
+
+    function guardarNuevoProveedor(proveedorFormularioEdicion) {
+        const datosFormulario = new FormData(proveedorFormularioEdicion);
+
+        fetch(apiUrlProveedoresPost, {method: "POST", body: datosFormulario})
+        .then((respuesta) => {
+            if(!respuesta.ok) {
+                throw new Error(`Error en la solicitud: ${respuesta.status}`);
+            }
+            return respuesta.json();
+        })
+        .then((data) => {
+            new Modal(data, "informacion", "", "");
+        })
+        .catch((error) => {
+            const mensajeError = `Error en la solicitud <br> ${error} <br> Consulte con el servicio tecnico`;
+            new Modal(mensajeError,"informacion","","");
+
+        });
+
+
 }
+
+
+
+}
+
+}
+
 doProveedores();

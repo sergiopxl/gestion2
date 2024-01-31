@@ -20,7 +20,7 @@
     </nav>
   </header>
   <div id="acciones" class="acciones-pagina">
-    <div id="nuevo-cliente-btn" class="btn-success">Nuevo Proveedor</div> <!-- Boton con funcion de agregar un proveedor.La funcion hecha en proveedores.js tiene un evento cuando hago clic en el boton que tiene como id "nuevoProveedorBtn" donde se ejecuta la funcion doNuevoProveedor y utilizo event.preventDefault para evitar la accion quehace por default el botn, solo quiero que  haga la que yo le pedi -->
+    <div id="nuevo-proveedor-btn" class="btn-success">Nuevo Proveedor</div> <!-- Boton con funcion de agregar un proveedor.La funcion hecha en proveedores.js tiene un evento cuando hago clic en el boton que tiene como id "nuevoProveedorBtn" donde se ejecuta la funcion doNuevoProveedor y utilizo event.preventDefault para evitar la accion quehace por default el botn, solo quiero que  haga la que yo le pedi -->
     <div id="paginacion"><!-- Aqui la paginacion -->
       <div class="elemento-paginacion">1</div>
       <div class="elemento-paginacion">2</div>
@@ -44,10 +44,44 @@
     <h1 id="h1-apartado">Proveedores</h1>
 
     <main>
-
+      
     
     
     </main>
+
+    <div id="bloque-formulario" class="hidden">
+      <form action="" method="post" class="proveedor-formulario">
+        <input type="hidden" name="input-cliente-id">
+        <fieldset>
+          <label for="input-proveedor-nombre">Nombre</label>
+          <input type="text" name="input-proveedor-nombre" required="required">
+        </fieldset>
+        <fieldset>
+          <label for="input-proveedor-cif">CIF</label>
+          <input type="text" name="input-proveedor-cif" required="required">
+        </fieldset>
+        <fieldset>
+          <label for="input-proveedor-tlf">Telefono</label>
+          <input type="text" name="input-proveedor-tlf" required="required">
+        </fieldset>
+        <fieldset>
+          <label for="input-proveedor-direccion">Direccion</label>
+          <input type="text" name="input-proveedor-direccion" required="required">
+        </fieldset>
+        <fieldset>
+          <label for="select-proveedor-servicio">Servicio</label>
+          <select type="text" name="select-proveedor-servicio" required="required">
+            <option value="0" selected disabled>Seleccione un sector</option></select>
+        </fieldset><button class="btn-success formulario-boton-enviar">Guardar cambios</button>
+      </form>
+      <div class="proveedor-contactos-contenedor-formulario">
+        <button class="btn-info nuevo-contacto-boton">Nuevo contacto</button>
+        <form action="" class="cliente-contactos-form hidden">
+          <input type="hidden" name="input-contacto-id">
+  
+          
+  
+          <input type="hidden" name="input-contacto-cliente-id">
 
 
       <div id="proveedor-row" class=" hidden">
