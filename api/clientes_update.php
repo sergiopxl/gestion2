@@ -19,6 +19,7 @@ cif = '$cif',
 telefono = $telefono,
 direccion = '$direccion',
 id_sector = '$idSector' WHERE id = $idCliente";
+
 $respuesta = mysqli_query($conn,$sqlClienteUpdate);
 if($respuesta){
     $mensaje = "Registro actualizado correctamente";
