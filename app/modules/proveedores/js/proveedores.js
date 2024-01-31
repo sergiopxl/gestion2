@@ -10,20 +10,7 @@ function doProveedores() {
 
     const buscadorInput = document.querySelector("#buscador-input");
     const buscadorBoton = document.querySelector("#buscador-boton");
-    const proveedorNuevoBtn = document.querySelector("#nuevo-proveedor-btn");
-    const proveedorBtnEnviar= document.querySelector(".formulario-boton-enviar")
-
-    proveedorBtnEnviar.addEventListener("click", (e) => {
-        e.preventDefault();
-        new Modal("Estas seguro de modificar los cambios","confirmacion",guardarUpdateProveedor,"");
-
-
-    })
-
-    proveedorNuevoBtn.addEventListener("click", () => {
-        doNuevoProveedor();
-
-    })
+    
 
     buscadorBoton.addEventListener("click", () => {
         if (buscadorInput.value != "") {
@@ -34,13 +21,13 @@ function doProveedores() {
 
 
     const nuevoProveedorBtn = document.querySelector("#nuevo-proveedor-btn");
-    /*
+    
         nuevoProveedorBtn.addEventListener("click", (event) => {
     
             event.preventDefault();
             doNuevoProveedor();
         });
-    */
+    
     const getProveedores = (actual, buscar) => {
 
         let parametroBuscar = "";
@@ -194,14 +181,11 @@ function doProveedores() {
         bloqueFormulario.querySelector(".proveedor-contactos-contenedor-formulario").remove();
 
         const proveedoresSelectServicio = proveedorFormularioEdicion.querySelector("[name = 'select-proveedor-servicio']");
-        const botonNuevoProveedorEnviar = proveedorFormularioEdicion.querySelector(".formulario-boton-enviar");
+        const proveedorBtnEnviar = proveedorFormularioEdicion.querySelector(".formulario-boton-enviar");
 
         getProveedoresServicios(proveedoresSelectServicio, "");
 
-        botonNuevoProveedorEnviar.addEventListener("click", (e) => {
-            e.preventDefault();
-   
-        });
+       
 
         contenedorListado.innerHTML = "";
         contenedorListado.append(bloqueFormulario);
@@ -230,10 +214,15 @@ function doProveedores() {
         contenedorListado.innerHTML = "";
         contenedorListado.append(bloqueFormulario);
         bloqueFormulario.classList.remove("hidden");
+        proveedorBtnEnviar.addEventListener("click", (e) => {
+            e.preventDefault();
+            new Modal("Estas seguro de modificar los cambios","confirmacion",guardarNuevoProveedor,proveedorFormularioEdicion);
+   
+        });
 
     }
 
-    function guardarUpdateProveedor() {
+    function guardarUpdateProveedor(proveedorFormularioEdicion) {
         const datosFormulario = new FormData(proveedorFormularioEdicion);
         fetch(apiUrlProveedorUpdate, { method: "POST", body: datosFormulario })
             .then((response) => {
@@ -274,6 +263,15 @@ function doProveedores() {
         proveedorFormularioEdicion.querySelector("[name = 'input-proveedor-direccion']").value = proveedor.direccion;
         console.log("proveedor.id_servicio",proveedor.id_servicio)
         getProveedoresServicios(proveedorFormularioEdicion.querySelector("[name='select-proveedor-servicio']"),proveedor.id_servicio);
+
+        const proveedorBtnEnviar= document.querySelector(".formulario-boton-enviar")
+
+    proveedorBtnEnviar.addEventListener("click", (e) => {
+        e.preventDefault();
+        new Modal("Estas seguro de modificar los cambios","confirmacion",guardarUpdateProveedor,proveedorFormularioEdicion);
+
+
+    })
 
 
     }

@@ -12,5 +12,5 @@ const apiUrlContactosPost="http://localhost/gestion2/api/clientes_contactos_post
 const apiUrlProveedoresGet="http://localhost/gestion2/api/proveedores_get.php";
 const apiUrlProveedoresPost="http://localhost/gestion2/api/proveedores_post.php";
 const apiUrlProveedoresServiciosGet="http://localhost/gestion2/api/proveedores_servicios.php";
-const apiUrlProveedoresUpdate="http://localhost/gestion2/api/proveedores_update.php"
+const apiUrlProveedorUpdate="http://localhost/gestion2/api/proveedores_update.php"
 
