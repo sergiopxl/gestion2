@@ -14,3 +14,4 @@ const apiUrlProveedoresPost="http://localhost/gestion2/api/proveedores_post.php"
 const apiUrlProveedoresServiciosGet="http://localhost/gestion2/api/proveedores_servicios.php";
 const apiUrlProveedorUpdate="http://localhost/gestion2/api/proveedores_update.php"
 
+
