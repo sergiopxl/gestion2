@@ -10,7 +10,9 @@
 
   <script src="../../assets/js/api_roots.js"></script>
   <script src="../../assets/js/navigation.js" defer></script>
+  <script src="../../assets/js/formato_moneda.js" defer></script>
   <script src="js/facturas.js" defer></script>
+  <script src="js/modalBuscar.js" defer></script>
 
 </head>
 
@@ -32,12 +34,12 @@
     </div>
   </section>
 
-  <h1 id="h1-apartado">Facturas | Listado</h1>
+  
   
     
 
   <main>
-   
+    
     
   </main>
   <div id="factura-template" class="factura-row hidden">  
@@ -85,7 +87,7 @@
         <label for="">
           iva
         </label>
-        <input type="text" name="input-iva" id="">
+        <input type="text" name="input-iva" id="input-iva">
       </fieldset>
       
       <div class="base-imponible-vista"></div>
@@ -113,8 +115,8 @@
         </fieldset>
         
         <fieldset>
-          <label for="">importe</label>
-          <input type="text" name="input-importe">
+          <label for="">Importe</label>
+          <input type="text" name="input-importe" value="0">
         </fieldset>
         <button class="eliminar-concepto">Eliminar</button>
       </div>

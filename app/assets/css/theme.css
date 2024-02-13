@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
 }
@@ -196,6 +197,7 @@ fieldset {
   flex-direction: row;
 }
 
+/* Utilizar colores grises y texto blanco */
 .factura-row {
   display: flex;
   flex-direction: row;
@@ -203,12 +205,15 @@ fieldset {
   gap: 0.5rem;
   border: 1px solid #b1b0b0;
   margin-bottom: 0.5rem;
+  background-color: #f2f2f2; /* Fondo gris suave */
+  color: #333; /* Texto oscuro */
 }
 .factura-row:nth-of-type(odd) {
-  background-color: #e2e2e2;
+  background-color: #e5e5e5; /* Fondo gris ligeramente más oscuro para filas impares */
 }
 .factura-row p {
   margin: 0.6rem 0;
+  color: #333; /* Texto oscuro */
 }
 .factura-row .factura-botones {
   flex: 1 0 100%;
@@ -219,12 +224,13 @@ fieldset {
   flex: 1 0 50%;
   flex-wrap: wrap;
   padding: 0.5rem;
-  border-right: 1px dashed #b1b0b0;
+  border-right: 1px dashed #ccc; /* Línea separadora */
 }
 .factura-row .factura-resumen-datos .factura-resumen {
-  background-color: #b4d2f0;
+  background-color: #ddd; /* Fondo gris más oscuro */
   padding: 0.5rem;
   border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 .factura-row .factura-items {
   flex-grow: 1;
@@ -236,11 +242,14 @@ fieldset {
 }
 .factura-row .factura-items .factura-item p {
   margin: 0.6rem 0;
+  color: #333; /* Texto oscuro */
 }
 .factura-row .factura-items .factura-item .item-importe {
   font-weight: bold;
+  color: #333; /* Texto oscuro */
 }
 
+/* Estilos para el formulario */
 .bloque-formulario {
   display: flex;
 }
@@ -249,6 +258,67 @@ fieldset {
 }
 .bloque-formulario label {
   min-width: 16ch;
+}
+
+/* Estilos para el contenedor de la factura */
+#factura-new-template {
+  border: 1px solid #b1b0b0;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f5f5f5; /* Fondo gris más claro */
+  border-radius: 0.5rem; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilos para el encabezado de la factura */
+#factura-new-template header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+#factura-new-template header fieldset {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#factura-new-template header label {
+  margin-bottom: 0.5rem;
+  color: #333; /* Texto oscuro */
+}
+
+/* Estilos para el listado de conceptos */
+#factura-new-template .listado-conceptos {
+  margin-top: 1rem;
+}
+
+#factura-new-template .listado-conceptos #concepto-template {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+#factura-new-template .listado-conceptos #concepto-template fieldset {
+  flex: 1 1 auto;
+}
+
+#factura-new-template .listado-conceptos #concepto-template label {
+  margin-bottom: 0.25rem;
+  color: #333; /* Texto oscuro */
+}
+
+#factura-new-template .listado-conceptos #concepto-template textarea,
+#factura-new-template .listado-conceptos #concepto-template input[type=text] {
+  width: 100%;
+  background-color: #f2f2f2; /* Fondo gris suave */
+  color: #333; /* Texto oscuro */
+}
+
+#factura-new-template .listado-conceptos #concepto-template .eliminar-concepto {
+  align-self: flex-end;
 }
 
 #paginacion {
