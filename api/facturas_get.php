@@ -13,14 +13,15 @@ $error = false;
 
 //}
 if(isset($_GET["listado"])){
-    $facturas=[];
+    $facturas = [];
     $sqlFacturas = "SELECT facturas_tb.*, clientes_tb.nombre AS cliente, facturas_estados_tb.nombre AS estado FROM facturas_tb LEFT JOIN clientes_tb ON facturas_tb.id_cliente = clientes_tb.id LEFT JOIN facturas_estados_tb ON facturas_tb.id_estado= facturas_estados_tb.id WHERE 1";
     $respuestaFacturas = mysqli_query($conn, $sqlFacturas);
     while($factura = mysqli_fetch_assoc($respuestaFacturas)){
         $idFactura= $factura["id"];
         $sqlItems = "SELECT facturas_items_tb.* FROM facturas_items_tb WHERE facturas_items_tb.id_factura = $idFactura";
-        $respuestaItems = mysqli_query($conn,$sqlFacturas);
-        $items=[];
+        $respuestaItems = mysqli_query($conn,$sqlItems);
+        $items = [];
+
         while($item = mysqli_fetch_assoc($respuestaItems)){
             $items[] = $item;
         }
@@ -33,7 +34,7 @@ if(isset($_GET["listado"])){
 
 }
 if(!$error)
-    echo json_encode($respuesta);
+    echo json_encode($facturas);
 else
     echo json_encode("Ha habido un problema");
 

@@ -20,8 +20,7 @@ const nuevoClienteBtn = document.querySelector("#nuevo-cliente-btn");
 
 nuevoClienteBtn.addEventListener("click", (event) => {
     
-    event.preventDefault();
-    doNuevoCliente();
+  nuevoCliente
 });
 
     const getClientes = (actual,buscar)=>{
@@ -334,6 +333,6 @@ nuevoClienteBtn.addEventListener("click", (event) => {
       
 
      }
-
+getClientes();
 }
 doClientes();

@@ -5,9 +5,12 @@ function doFacturas(){
  
   const contenedorListado = document.querySelector("main");
   const templateFactura = document.querySelector("#factura-template");
-  const templateFacturaItem = document.querySelector("#factura-item-template");
+  const templateFacturaItem = templateFactura.querySelector("#factura-item-template");
+  console.log(templateFacturaItem)
+  const contenedorAcciones = document.querySelector("#acciones");
 
-;
+
+
 
 
   /*
@@ -41,41 +44,44 @@ function doFacturas(){
  function printFacturas(facturas){
   contenedorListado.innerHTML = "";
   facturas.forEach(factura => {
+   console.log(factura)
     const contenedorFactura = templateFactura.cloneNode(true);
+    //console.log("contenedorFactura",contenedorFactura)
     contenedorFactura.id="";
     contenedorFactura.classList.remove("hidden");
-    templateItem = contenedorFactura.querySelector(".factura-items")
+    const contenedorItems = contenedorFactura.querySelector(".factura-items")
+    //console.log("contenedorItems",contenedorItems)
+    contenedorItems.innerHTML=""
 
-    clienteContenedor.querySelector(".factura-numero strong").textContent = factura.id;
-    clienteContenedor.querySelector(".factura-cliente strong").txtContent = factura.cliente;
-    clienteContenedor.querySelector(".factura-estado strong").textContent = factura.estado;
-    clienteContenedor.querySelector(".factura-importe strong").textContent = factura.importe;
-    clienteContenedor.querySelector(".factura-descripcion").textContent =  factura.descripcion;
+    contenedorFactura.querySelector(".factura-numero strong").textContent = factura.id;
+    contenedorFactura.querySelector(".factura-cliente strong").txtContent = factura.cliente;
+    contenedorFactura.querySelector(".factura-estado strong").textContent = factura.estado;
+    contenedorFactura.querySelector(".factura-importe strong").textContent = factura.importe;
+    contenedorFactura.querySelector(".factura-descripcion").textContent =  factura.descripcion;
   
   factura.items.forEach(item =>{
+  
     const contenedorItem = templateFacturaItem.cloneNode(true);
-    const rowItem = contenedorItem.querySelector("#factura-item-template");
-    rowItem.classList.remove("hidden");
-    rowItem.id="";
-    rowItem.contenedorItem.querySelector(".item-descripcion").textContent= item.descripcion;
-    rowItem.contenedorItem.querySelector(".item-importe").textContent= item.importe;
+    
+    contenedorItem.classList.remove("hidden");
+    contenedorItem.id="";
+    contenedorItem.querySelector(".item-descripcion").textContent= item.descripcion;
+    contenedorItem.querySelector(".item-importe").textContent= item.importe;
 
-
+    contenedorItems.append(contenedorItem)
 
 
   })  
-
+contenedorListado.append(contenedorFactura)
 
   });
 
-  
+  const nuevaFacturaBtn = document.querySelector("#nueva-factura-btn");
+  nuevaFacturaBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    doNuevaFactura();
 
-  
-
-
-
-
-
+  });
 
   /*
     - limpiar main
@@ -90,7 +96,41 @@ function doFacturas(){
       - append factura al main
   */
  }
- function nuevaFactura(){
+ function doNuevaFactura(){
+  contenedorListado.innerHTML = ""; 
+  
+ const templateCfactura = document.querySelector("#factura-new-template");  
+  contenedorListado.append(templateCfactura);
+  /////
+  contenedorAcciones.innerHTML = "";
+
+  const botonGuardar = document.createElement("button");
+  botonGuardar.textContent="guardar";
+  botonGuardar.classList.add("btn-succes");
+  botonGuardar.addEventListener("click",e=>{
+    e.preventDefault();
+    guardarNuevaFactura();
+
+  })
+  const nuevoConcepto= document.createElement("button");
+  nuevoConcepto.textContent= "nuevo concepto";
+  nuevoConcepto.classList.add("btn-success");
+  nuevoConcepto.addEventListener("click",e=> {
+    e.preventDefault;
+    crearItem();
+  })
+  contenedorAcciones.append(botonGuardar, nuevoConcepto );
+
+
+
+
+
+
+
+
+ 
+
+
 
   /*
     - limpiar main
@@ -100,7 +140,8 @@ function doFacturas(){
     - evento botón guardar -> guardarNuevaFactura()
   */
 
-  function guardarNuevaFactura(){    
+  function guardarNuevaFactura(){ 
+    console.log("Estoy guardando!") ;  
     /*
       - recogida de datos del formulario creando un JSON, no se puede hacer con un FormData.
       - envio de datos al API POST, los datos del body han de ir en formato JSON pero convertidos a cadena.
@@ -131,8 +172,9 @@ function doFacturas(){
  }
 
  function crearItem(contenedorItems,datoItem){ 
+  console.log("Agregue un item!")
     /*
-      - clonado del template de item desde el objeto que recibimos por parametro , eliminar id, quita clase oculto, añadir clase
+      - clonado del template de item desde el objeto que recibimos por parametro , eliminar id, quita clase oculto, añadir clase concepto-template
       - evento cambio de importe -> calcularImporteTotal();
       - evento eliminar item -> eliminarItem(item) -> calcularImporteTotal(); 
       - appen item al contendorItems

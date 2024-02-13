@@ -21,9 +21,10 @@
       <ul></ul>
     </nav>
   </header>
+  
 
-  <section id="acciones" class="acciones-pagina hidden">
-    <div id="nuevo-cliente-btn" class="btn-success">Nuevo Cliente</div>
+  <section id="acciones" class="acciones-pagina">
+    <div id="nueva-factura-btn" class="btn-success">Nueva Factura</div>
     <div id="paginacion"></div>
     <div id="buscador">
       <input type="text" id="buscador-input">
@@ -32,12 +33,14 @@
   </section>
 
   <h1 id="h1-apartado">Facturas | Listado</h1>
+  
+    
 
   <main>
    
     
   </main>
-  <div id="factura-template" class="factura-row">  
+  <div id="factura-template" class="factura-row hidden">  
 
     <div class="factura-resumen-datos">
       <div class="factura-botones">
@@ -71,6 +74,51 @@
       </div>
     </div>
     
+  </div>
+  <div id="factura-new-template" class="">
+    <header>
+     
+      
+
+      <input type="hidden" name="input-baseimponible">
+      <fieldset>
+        <label for="">
+          iva
+        </label>
+        <input type="text" name="input-iva" id="">
+      </fieldset>
+      
+      <div class="base-imponible-vista"></div>
+      <div class="importe-total"></div>
+
+      <input type="hidden" name="input-id-cliente">
+      <div class="cliente-vista">Cliente: <span></span></div>
+      <button id="buscar-cliente-btn">Buscar cliente</button>
+      <div class="contacto">
+        <select name="contacto-select" >
+          <option value="" selected disabled> Seleccione contacto</option>
+        </select>
+      </div>
+      <fieldset>
+        <label for="">Fecha emisión</label>
+        <input type="date" name="input-fecha-emision">
+      </fieldset>
+    </header>
+    
+    <div class="listado-conceptos">
+      <div class="concepto-template">
+        <fieldset>
+          <label for="">Descripcion</label>
+          <textarea name="descripcion-concepto" id="" cols="30" rows="10"></textarea>
+        </fieldset>
+        
+        <fieldset>
+          <label for="">importe</label>
+          <input type="text" name="input-importe">
+        </fieldset>
+        <button class="eliminar-concepto">Eliminar</button>
+      </div>
+    </div>
   </div>
 
 </body>
