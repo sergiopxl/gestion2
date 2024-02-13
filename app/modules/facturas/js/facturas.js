@@ -98,6 +98,7 @@ contenedorListado.append(contenedorFactura)
  }
  function doNuevaFactura(){
   contenedorListado.innerHTML = ""; 
+  const contenedorItems= document.querySelector(".listado-conceptos")
   
  const templateCfactura = document.querySelector("#factura-new-template");  
   contenedorListado.append(templateCfactura);
@@ -117,9 +118,10 @@ contenedorListado.append(contenedorFactura)
   nuevoConcepto.classList.add("btn-success");
   nuevoConcepto.addEventListener("click",e=> {
     e.preventDefault;
-    crearItem();
+    crearItem(contenedorItems);
   })
   contenedorAcciones.append(botonGuardar, nuevoConcepto );
+
 
 
 
@@ -173,8 +175,14 @@ contenedorListado.append(contenedorFactura)
 
  function crearItem(contenedorItems,datoItem){ 
   console.log("Agregue un item!")
-    /*
-      - clonado del template de item desde el objeto que recibimos por parametro , eliminar id, quita clase oculto, añadir clase concepto-template
+    
+  const bloqueFormulario = contenedorItems.querySelector("#concepto-template").cloneNode(true);
+  bloqueFormulario.id = "";
+  bloqueFormulario.classList.add("concepto-template");
+  bloqueFormulario.classList.remove("hidden");
+ 
+  contenedorItems.append(bloqueFormulario);
+    /*  - clonado del template de item desde el objeto que recibimos por parametro , eliminar id, quita clase oculto, añadir clase concepto-template
       - evento cambio de importe -> calcularImporteTotal();
       - evento eliminar item -> eliminarItem(item) -> calcularImporteTotal(); 
       - appen item al contendorItems
