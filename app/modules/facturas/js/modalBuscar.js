@@ -37,10 +37,33 @@ class ModalBuscar {
                         const divClienteResultadoBusqueda = document.createElement("div");
                         // Evento al hacer clic en un cliente encontrado
                         divClienteResultadoBusqueda.addEventListener("click", () => {
+                            
+                             // Limpiar opciones previas del select
+                        const selectContactos = document.querySelector("#select-contactos");
+                         selectContactos.innerHTML = <option value="" selected disabled> Seleccione contacto</option>;
+
+                         // Agregar las opciones de contacto al select
+                         cliente.contactos.forEach(contacto => {
+                            const option = document.createElement("option");
+                            option.value = contacto.id;
+                            option.textContent = `${contacto.nombre} (${contacto.email})`;
+                            selectContactos.appendChild(option);
+                        });
+
+                        this.destroy(); // Cerrar el modal después de seleccionar un cliente
+                    });
+                                                
+
+                            
+                            
+                            
+
+
                             // Actualizar la vista con el nombre del cliente seleccionado
                             document.querySelector(".cliente-vista span").textContent = cliente.nombre;
                             document.querySelector("[name='input-id-cliente']").value = cliente.id;
                             this.destroy(); // Cerrar el modal después de seleccionar un cliente
+
                         });
                         // Mostrar el nombre del cliente en el resultado de la búsqueda
                         divClienteResultadoBusqueda.textContent = cliente.nombre;
@@ -49,6 +72,7 @@ class ModalBuscar {
                     this.contenedor.append(contenedorResultadoClientes); // Agregar los resultados al modal
                 });
         });
+
 
         // Evento para cerrar el modal al hacer clic en el botón de cierre
         this.exit.addEventListener("click", () => {
