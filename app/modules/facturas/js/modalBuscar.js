@@ -13,18 +13,21 @@ constructor(){
     this.boton.textContent = "Buscar";
     this.resultado.classList.add("resultado-modal");
     this.exit.classList.add("exit-modal");
-
+    this.exit.textContent = "x";
 
     this.boton.addEventListener("click",()=>{
         alert("holas")
-        
-
-
-
+       
+    
+    })
+    this.exit.addEventListener("click",()=>{
+        this.destroy();
     })
 this.contenedor.append(this.exit,this.inputBusqueda,this.boton,this.resultado);
  document.querySelector("body").append(this.contenedor);
+
 }
-
-
+destroy(){
+    this.contenedor.remove();
+}
 }
