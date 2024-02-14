@@ -6,19 +6,29 @@ header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Ca
 header("Access-Control-Allow-Methods: GET");
 include("conn/conexion.php");
 
-$inicio = $_GET["inicio"];
-$porPagina = $_GET["porpagina"];
+
+
 $condicion = " WHERE activo = 1 ";
 $limite = "";
 if (isset($_GET["inicio"])){
- $limite = " LIMIT $inicio, $porPagina ";
+    $inicio = $_GET["inicio"];
+ 
+}else {
+    $inicio = 0;
 }
 
 if(isset($_GET["buscar"])){
+    
     $buscar = $_GET["buscar"];
     $condicion = " WHERE activo = 1 AND (clientes_tb.nombre LIKE '%$buscar%' OR clientes_tb.cif LIKE '%$buscar%' ) ";
 }
+if (isset($_GET["porpagina"])) {
+    $porPagina = $_GET["porpagina"];
 
+}else {
+    $porPagina = 30;
+}
+$limite = " LIMIT $inicio, $porPagina ";
 
 $respuesta = [];
 

@@ -15,11 +15,36 @@ constructor(){
     this.exit.classList.add("exit-modal");
     this.exit.textContent = "x";
 
+    
     this.boton.addEventListener("click",()=>{
-        alert("holas")
+    fetch(apiUrlClientesGet + "?buscar=" + this.inputBusqueda.value,{method:"GET"})
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('La solicitud no pudo ser completada correctamente.'+response.status);
+        }
+        return response.json(); // Convertir la respuesta a formato JSON
+    })
+    .then(respuesta => {
+        // Actualizar el valor del input con el cliente obtenido
+        //this.inputBusqueda.value = respuesta.clientes;
+        const contenedorResultadoClientes = document.createElement("div")
+        for (let i = 0; i < respuesta.clientes.length; i++) {
+            const cliente = respuesta.clientes[i];
+            const divClienteResultadoBusqueda = document.createElement("div");
+            divClienteResultadoBusqueda.textContent = cliente.nombre;
+            contenedorResultadoClientes.append(divClienteResultadoBusqueda);
+        }
+        this.contenedor.append (contenedorResultadoClientes);
+        
+        // Suponiendo que el nombre del cliente es lo que quieres mostrar en el input
+    })
+    
+    
        
     
     })
+    
+
     this.exit.addEventListener("click",()=>{
         this.destroy();
     })
