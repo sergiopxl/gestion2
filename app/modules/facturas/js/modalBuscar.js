@@ -31,6 +31,11 @@ constructor(){
         for (let i = 0; i < respuesta.clientes.length; i++) {
             const cliente = respuesta.clientes[i];
             const divClienteResultadoBusqueda = document.createElement("div");
+            divClienteResultadoBusqueda.addEventListener("click",()=>{
+               document.querySelector(".cliente-vista span").textContent = cliente.nombre;   
+               document.querySelector("[name='input-id-cliente']").value= cliente.id;
+               this.destroy();
+            })
             divClienteResultadoBusqueda.textContent = cliente.nombre;
             contenedorResultadoClientes.append(divClienteResultadoBusqueda);
         }

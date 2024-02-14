@@ -46,7 +46,7 @@ function doFacturas() {
   function printFacturas(facturas) {
     contenedorListado.innerHTML = "";
     facturas.forEach(factura => {
-      console.log(factura)
+      //console.log(factura)
       const contenedorFactura = templateFactura.cloneNode(true);
       //console.log("contenedorFactura",contenedorFactura)
       contenedorFactura.id = "";
