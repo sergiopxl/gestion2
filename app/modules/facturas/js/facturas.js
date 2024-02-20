@@ -20,7 +20,7 @@ function doFacturas() {
     - declaración de variables de ambito general 
     - eventos de acciones generales del apartado
   */
-
+/* - recogida de datos del formulario creando un JSON, no se puede hacer con un FormData. - envio de datos al API POST, los datos del body han de ir en formato JSON pero convertidos a cadena. - información resultado del alta */
   getFacturas();
 
 
@@ -98,6 +98,22 @@ function doFacturas() {
         - append factura al main
     */
   }
+  function actualizarInputFecha() {
+    const fechaActual = new Date();
+    const año = fechaActual.getFullYear();
+    const mes = ('0' + (fechaActual.getMonth() + 1)).slice(-2); // Agrega un cero delante si es necesario
+    const dia = ('0' + fechaActual.getDate()).slice(-2); // Agrega un cero delante si es necesario
+
+    const fechaFormateada = `${año}-${mes}-${dia}`;
+
+    const inputFecha = document.querySelector("[name='input-fecha-emision']");
+    inputFecha.value = fechaFormateada;
+}
+
+// Llamar a la función para actualizar el input de fecha cuando se cargue la página
+actualizarInputFecha();
+
+
   function doNuevaFactura() {
    
 
@@ -107,6 +123,10 @@ function doFacturas() {
 
     const templateCfactura = document.querySelector("#factura-new-template");
     contenedorListado.append(templateCfactura);
+
+    
+
+    
     /////
     contenedorAcciones.innerHTML = "";
     const botonBuscarCliente = document.querySelector("#buscar-cliente-btn")
@@ -155,14 +175,54 @@ function doFacturas() {
       - evento botón guardar -> guardarNuevaFactura()
     */
 
-    function guardarNuevaFactura() {
-      console.log("Estoy guardando!");
-      /*
-        - recogida de datos del formulario creando un JSON, no se puede hacer con un FormData.
-        - envio de datos al API POST, los datos del body han de ir en formato JSON pero convertidos a cadena.
-        - información resultado del alta
-      */
+      function guardarNuevaFactura() {
+        // Recogida de datos del formulario creando un JSON
+        const nuevaFactura = {
+          baseimponible: baseimponible,
+          iva: document.querySelector("#input-iva").value,
+          descripcion: document.querySelector("textarea[name='descripcion-concepto']").value,
+          id_cliente: document.querySelector("input[name='input-id-cliente']").value,
+          importe: constIva,
+          
+          items:[]
+        };
+
+        const items = document.querySelectorAll(".concepto-template");
+        items.forEach(item=> { 
+          nuevaFactura.items.push({
+            descripcion: item.querySelector("[name = 'descripcion-concepto']").value,
+            importe: item.querySelector("[name = 'input-importe']").value
+
+          });
+        
+        })
+        console.log(JSON.stringify(nuevaFactura))
+        // Envío de datos al API POST
+        fetch(apiUrlFacturasPost, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest", // Para el control de solicitudes AJAX en PHP
+              
+            },
+            body: JSON.stringify(nuevaFactura)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(resultado => {
+            console.log("Respuesta del servidor:", resultado);
+            // Aquí puedes manejar la respuesta del servidor, por ejemplo, mostrar un mensaje al usuario.
+        })
+        .catch(error => {
+            console.error("Error al enviar la factura:", error);
+            // Aquí puedes manejar los errores, por ejemplo, mostrar un mensaje de error al usuario.
+        });
     }
+    
 
   }
 
@@ -233,13 +293,21 @@ function doFacturas() {
       importeIva = importeTotal*(1+(iva/100));
     });
 
+    
+
     importeTotalContainer.textContent=formatoMoneda(importeIva);
+    constIva = importeIva;
+    baseimponible = importeTotal;
 
 
+    
 
 
 
   }
+  let constIva = 0;
+  let baseimponible = 0;
+
   inputIva.addEventListener("change" ,()=> {
     calcularImporteTotal();
     

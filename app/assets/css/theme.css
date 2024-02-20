@@ -307,11 +307,18 @@ fieldset {
   border-radius: 0.5rem; /* Bordes redondeados */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
+#factura-new-template .importe-total {
+  font-size: 2rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid;
+  text-align: right;
+}
 
 /* Estilos para el encabezado de la factura */
 #factura-new-template header {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, calc(33.3333333333% - 1rem));
   gap: 1rem;
   align-items: center;
 }
@@ -334,20 +341,29 @@ fieldset {
 }
 
 /* Estilos para el template de concepto */
-#factura-new-template .listado-conceptos #concepto-template {
+#factura-new-template .listado-conceptos .concepto-template {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: 1rem;
   margin-top: 0.5rem;
 }
+#factura-new-template .listado-conceptos .concepto-template .eliminar-concepto {
+  margin-top: 1.75rem;
+}
+#factura-new-template .listado-conceptos .concepto-template textarea {
+  height: 8ch;
+}
 
 /* Estilos para los fieldsets del template de concepto */
-#factura-new-template .listado-conceptos #concepto-template fieldset {
+#factura-new-template .listado-conceptos .concepto-template fieldset {
   flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Estilos para las etiquetas del template de concepto */
-#factura-new-template .listado-conceptos #concepto-template label {
+#factura-new-template .listado-conceptos .concepto-template label {
   margin-bottom: 0.25rem;
 }
 

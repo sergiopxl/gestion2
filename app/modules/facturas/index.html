@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>su
 <html lang="es">
 
 <head>
@@ -79,32 +79,31 @@
   </div>
   <div id="factura-new-template" class="">
     <header>
-     
-      
-
-      <input type="hidden" name="input-baseimponible">
+     <input type="hidden" name="input-baseimponible">
       <fieldset>
         <label for="">
-          iva
+          IVA %
         </label>
         <input type="text" name="input-iva" id="input-iva">
       </fieldset>
-      
-      <div class="base-imponible-vista"></div>
+           
       <div class="importe-total"></div>
 
+      <fieldset>
+        <label for="">Fecha emisión</label>
+        <input type="date" name="input-fecha-emision">
+      </fieldset>
+
       <input type="hidden" name="input-id-cliente">
-      <div class="cliente-vista">Cliente: <span></span></div>
       <button id="buscar-cliente-btn">Buscar cliente</button>
+      <div class="cliente-vista">Cliente: <span></span></div>
+      
       <div class="contacto">
         <select name="contacto-select" >
           <option value="" selected disabled> Seleccione contacto</option>
         </select>
       </div>
-      <fieldset>
-        <label for="">Fecha emisión</label>
-        <input type="date" name="input-fecha-emision">
-      </fieldset>
+      
     </header>
     
     <div class="listado-conceptos">
@@ -118,7 +117,7 @@
           <label for="">Importe</label>
           <input type="text" name="input-importe" value="0">
         </fieldset>
-        <button class="eliminar-concepto">Eliminar</button>
+        <button class="eliminar-concepto btn-error">Eliminar</button>
       </div>
     </div>
   </div>
