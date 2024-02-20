@@ -25,6 +25,11 @@ fieldset {
   border: 0px;
 }
 
+#h1-apartado {
+  width: min(1024px, 90vw);
+  margin: auto;
+}
+
 .btn-success {
   border-radius: 0.3rem;
   max-width: -moz-fit-content;
@@ -99,7 +104,7 @@ fieldset {
 
 .acciones-pagina {
   position: sticky;
-  top: 60px;
+  top: 50px;
   background-color: aliceblue;
   display: flex;
   justify-content: space-between;
@@ -170,6 +175,25 @@ fieldset {
   background-color: white;
 }
 
+#paginacion {
+  display: flex;
+  gap: 0.5rem;
+}
+#paginacion .elemento-paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  min-width: 2rem;
+  border-radius: 0.3rem;
+  background-color: #e2e2e2;
+  cursor: pointer;
+}
+#paginacion .elemento-paginacion.elemento-paginacion-actual {
+  background-color: #343434;
+  color: white;
+}
+
 .cliente-row {
   display: flex;
   gap: 0.5rem;
@@ -198,12 +222,13 @@ fieldset {
 }
 
 /* Utilizar colores grises y texto blanco */
+/* Estilos para las filas de la factura */
 .factura-row {
   display: flex;
   flex-direction: row;
   align-items: start;
   gap: 0.5rem;
-  border: 1px solid #b1b0b0;
+  border: 1px solid #ccc; /* Cambié $color-gris-medio por un valor concreto */
   margin-bottom: 0.5rem;
   background-color: #f2f2f2; /* Fondo gris suave */
   color: #333; /* Texto oscuro */
@@ -211,14 +236,19 @@ fieldset {
 .factura-row:nth-of-type(odd) {
   background-color: #e5e5e5; /* Fondo gris ligeramente más oscuro para filas impares */
 }
+
+/* Estilos para los párrafos dentro de las filas */
 .factura-row p {
   margin: 0.6rem 0;
-  color: #333; /* Texto oscuro */
 }
-.factura-row .factura-botones {
+
+/* Estilos para los botones dentro de las filas */
+.factura-botones {
   flex: 1 0 100%;
 }
-.factura-row .factura-resumen-datos {
+
+/* Estilos para el resumen de datos de la factura */
+.factura-resumen-datos {
   display: flex;
   gap: 0.5rem;
   flex: 1 0 50%;
@@ -226,43 +256,51 @@ fieldset {
   padding: 0.5rem;
   border-right: 1px dashed #ccc; /* Línea separadora */
 }
-.factura-row .factura-resumen-datos .factura-resumen {
+
+/* Estilos para cada elemento del resumen de datos */
+.factura-resumen {
   background-color: #ddd; /* Fondo gris más oscuro */
   padding: 0.5rem;
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
-.factura-row .factura-items {
+
+/* Estilos para las fechas en el resumen */
+/* Estilos para los items de la factura */
+.factura-items {
   flex-grow: 1;
   flex-shrink: 1;
   padding-right: 0.55rem;
 }
-.factura-row .factura-items .factura-item {
+
+/* Estilos para cada item de la factura */
+.factura-item {
   margin-bottom: 1.4rem;
 }
-.factura-row .factura-items .factura-item p {
-  margin: 0.6rem 0;
-  color: #333; /* Texto oscuro */
-}
-.factura-row .factura-items .factura-item .item-importe {
+
+/* Estilos para los importes dentro de los items */
+.item-importe {
   font-weight: bold;
-  color: #333; /* Texto oscuro */
 }
 
 /* Estilos para el formulario */
 .bloque-formulario {
   display: flex;
 }
+
+/* Estilos para los fieldsets del formulario */
 .bloque-formulario fieldset {
   display: flex;
 }
+
+/* Estilos para las etiquetas del formulario */
 .bloque-formulario label {
   min-width: 16ch;
 }
 
 /* Estilos para el contenedor de la factura */
 #factura-new-template {
-  border: 1px solid #b1b0b0;
+  border: 1px solid #ccc; /* Cambié $color-gris-medio por un valor concreto */
   padding: 1rem;
   margin-bottom: 1rem;
   background-color: #f5f5f5; /* Fondo gris más claro */
@@ -278,15 +316,16 @@ fieldset {
   align-items: center;
 }
 
+/* Estilos para los fieldsets del encabezado */
 #factura-new-template header fieldset {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
 }
 
+/* Estilos para las etiquetas del encabezado */
 #factura-new-template header label {
   margin-bottom: 0.5rem;
-  color: #333; /* Texto oscuro */
 }
 
 /* Estilos para el listado de conceptos */
@@ -294,6 +333,7 @@ fieldset {
   margin-top: 1rem;
 }
 
+/* Estilos para el template de concepto */
 #factura-new-template .listado-conceptos #concepto-template {
   display: flex;
   flex-wrap: wrap;
@@ -301,43 +341,20 @@ fieldset {
   margin-top: 0.5rem;
 }
 
+/* Estilos para los fieldsets del template de concepto */
 #factura-new-template .listado-conceptos #concepto-template fieldset {
   flex: 1 1 auto;
 }
 
+/* Estilos para las etiquetas del template de concepto */
 #factura-new-template .listado-conceptos #concepto-template label {
   margin-bottom: 0.25rem;
-  color: #333; /* Texto oscuro */
 }
 
+/* Estilos para los inputs y textareas del template de concepto */
 #factura-new-template .listado-conceptos #concepto-template textarea,
 #factura-new-template .listado-conceptos #concepto-template input[type=text] {
   width: 100%;
-  background-color: #f2f2f2; /* Fondo gris suave */
-  color: #333; /* Texto oscuro */
-}
-
-#factura-new-template .listado-conceptos #concepto-template .eliminar-concepto {
-  align-self: flex-end;
-}
-
-#paginacion {
-  display: flex;
-  gap: 0.5rem;
-}
-#paginacion .elemento-paginacion {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
-  min-width: 2rem;
-  border-radius: 0.3rem;
-  background-color: #e2e2e2;
-  cursor: pointer;
-}
-#paginacion .elemento-paginacion.elemento-paginacion-actual {
-  background-color: #343434;
-  color: white;
 }
 
 .proveedor-row {
