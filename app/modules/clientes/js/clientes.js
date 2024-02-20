@@ -20,7 +20,7 @@ const nuevoClienteBtn = document.querySelector("#nuevo-cliente-btn");
 
 nuevoClienteBtn.addEventListener("click", (event) => {
     
-  nuevoCliente
+  doNuevoCliente();
 });
 
     const getClientes = (actual,buscar)=>{
@@ -40,6 +40,7 @@ nuevoClienteBtn.addEventListener("click", (event) => {
             inicio = (paginaActual -1)* resultadosPorPagina;
         }
         if(buscar && buscar!=""){
+            inicio = 0;
             parametroBuscar = "&buscar=" + buscar;
             busquedaActiva = true;
             parametroPorPagina = "&porpagina=" + 99999;
@@ -282,7 +283,9 @@ nuevoClienteBtn.addEventListener("click", (event) => {
         bloqueFormulario.id = "";
         bloqueFormulario.classList.add("bloque-formulario");
         return bloqueFormulario;
+
      }
+
      function doNuevoCliente(){
 
         const bloqueFormulario = newBloqueFormulario();
