@@ -12,6 +12,7 @@ class ModalBuscar {
         this.contenedor.classList.add("modal-contenedor");
         this.inputBusqueda.classList.add("input-modal");
         this.boton.classList.add("btn-modal");
+        this.boton.textContent= "Buscar";
         this.resultado.classList.add("resultado-modal");
         this.exit.classList.add("exit-modal");
 
@@ -52,7 +53,7 @@ class ModalBuscar {
                             cliente.contactos.forEach(contacto=>{
                                 const option = document.createElement("option");
                                 option.value = contacto.id;
-                                option.textContent= `${contacto.nombre} (${contacto.email})`;
+                                option.textContent= `${contacto.nombre} ${contacto.apellido1} ${contacto.apellido2}`;
                                 selectContactos.appendChild(option);
                             });
                                this.destroy(); 
