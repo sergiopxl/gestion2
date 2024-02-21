@@ -7,7 +7,9 @@ function doClientes(){
     const contenedorListado = document.querySelector("main");
     const templateCliente = document.querySelector(".cliente-row");
 
-    const buscadorInput = document.querySelector("#buscador-input");
+    const buscadorInput = document.querySelector("#buscador-input");   
+
+    
     const buscadorBoton = document.querySelector("#buscador-boton");
 
     buscadorBoton.addEventListener("click",()=>{
