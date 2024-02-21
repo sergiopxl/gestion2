@@ -32,6 +32,8 @@ if(isset($_GET["listado"])){
     
     $respuesta = $facturas;
 
+    
+
 }
 if(!$error)
     echo json_encode($facturas);

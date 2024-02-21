@@ -61,6 +61,14 @@ function doFacturas() {
       contenedorFactura.querySelector(".factura-importe strong").textContent = factura.importe;
       contenedorFactura.querySelector(".factura-descripcion").textContent = factura.descripcion;
 
+
+      const editarFacturaBtn = contenedorFactura.querySelector(".factura-editar-button")
+      editarFacturaBtn.addEventListener("click",(event)=>{
+        event.preventDefault();
+        editarFactura(factura);
+
+      })
+
       factura.items.forEach(item => {
 
         const contenedorItem = templateFacturaItem.cloneNode(true);
@@ -69,6 +77,7 @@ function doFacturas() {
         contenedorItem.id = "";
         contenedorItem.querySelector(".item-descripcion").textContent = item.descripcion;
         contenedorItem.querySelector(".item-importe").textContent = item.importe;
+
 
         contenedorItems.append(contenedorItem)
 
@@ -121,7 +130,8 @@ actualizarInputFecha();
     contenedorListado.innerHTML = "";
     const contenedorItems = document.querySelector(".listado-conceptos")
 
-    const templateCfactura = document.querySelector("#factura-new-template");
+    const templateCfactura = document.querySelector("#factura-new-template").cloneNode(true);
+    templateCfactura.classList.remove("hidden");
     contenedorListado.append(templateCfactura);
 
     
@@ -137,8 +147,8 @@ actualizarInputFecha();
 
 
     const botonGuardar = document.createElement("button");
-    botonGuardar.textContent = "guardar";
-    botonGuardar.classList.add("btn-succes");
+    botonGuardar.textContent = "Guardar";
+    botonGuardar.classList.add("btn-success");
     botonGuardar.addEventListener("click", e => {
       e.preventDefault();
       guardarNuevaFactura();
@@ -149,22 +159,9 @@ actualizarInputFecha();
     nuevoConcepto.classList.add("btn-success");
     nuevoConcepto.addEventListener("click", e => {
       e.preventDefault;
-      crearItem(contenedorItems);
+      crearItem(templateCfactura);
     })
     contenedorAcciones.append(botonGuardar, nuevoConcepto);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /*
@@ -227,27 +224,83 @@ actualizarInputFecha();
   }
 
   function editarFactura(factura) {
-    /*
-      - limpiar main
-      - clonado de formulario factura, eliminar id, añadir clase
-      - evento botón nuevoConcepto -> crearItem(contenedorItems)
-      - evento boton buscar cliente -> buscarCliente() 
-      - evento botón guardar -> guardarEdicionFactura()
-      - cargar datos de factura en el formulario
-      + bucle sobre factura.items
-        - crearItem(contenedorItems,datoItem)
-    */
-    function guardarEdicionFactura() {
-      /*
-       - recogida de datos del formulario creando un JSON, no se puede hacer con un FormData.
-       - envio de datos al API POST, los datos del body han de ir en formato JSON pero convertidos a cadena.
-       - información resultado del alta
-     */
-    }
-  }
+    contenedorAcciones.innerHTML = "";
+    
+
+    
+    const botonGuardar = document.createElement("button");
+    botonGuardar.textContent = "Guardar";
+    botonGuardar.classList.add("btn-success");
+    botonGuardar.addEventListener("click", e => {
+      e.preventDefault();
+      guardarEdicionFactura(factura);
+
+    })
+    const nuevoConcepto = document.createElement("button");
+    nuevoConcepto.textContent = "nuevo concepto";
+    nuevoConcepto.classList.add("btn-success");
+    nuevoConcepto.addEventListener("click", e => {
+      e.preventDefault;
+      crearItem(contenedorFactura);
+    })
+    contenedorAcciones.append(botonGuardar, nuevoConcepto);
+
+    contenedorListado.innerHTML = "";
+
+    const contenedorFactura =  document.querySelector("#factura-new-template").cloneNode(true);
+    contenedorFactura.classList.remove("hidden");
+    contenedorListado.append(contenedorFactura);   
+
+    contenedorFactura.querySelector("[name='input-baseimponible']").value = factura.baseimponible;
+    contenedorFactura.querySelector(".importe-total").textContent = formatoMoneda(factura.baseimponible * (1+(factura.iva/100)));
+    contenedorFactura.querySelector("[name=input-iva]").value = factura.iva;
+    contenedorFactura.querySelector(".cliente-vista").textContent = factura.cliente;
+    contenedorFactura.querySelector("[name='input-fecha-emision']").value = factura.fecha_emision;
+  
+
+    const botonBuscarCliente = contenedorFactura.querySelector("#buscar-cliente-btn")
+    botonBuscarCliente.addEventListener("click",()=>{
+      new ModalBuscar();
+
+    })
+    
+factura.items.forEach(item =>{
+  crearItem(contenedorFactura,item);
+
+})
+
+  
+}
+
+function guardarEdicionFactura(factura) {
+
+    const facturaEditada = {
+        baseimponible: baseimponible,
+        iva: document.querySelector("#input-iva").value,
+        descripcion: document.querySelector("textarea[name='descripcion-concepto']").value,
+        id_cliente: document.querySelector("input[name='input-id-cliente']").value,
+        importe: constIva,
+        items: []
+    };
+
+    const items = document.querySelectorAll(".concepto-template");
+    items.forEach(item => {
+        facturaEditada.items.push({
+            descripcion: item.querySelector("[name='descripcion-concepto']").value,
+            importe: item.querySelector("[name='input-importe']").value
+        });
+    });
+
+    console.log(JSON.stringify(facturaEditada));
+
+   
+}
+
 
   function crearItem(contenedorItems, datoItem) {
     console.log("Agregue un item!")
+
+    
 
     const bloqueFormulario = contenedorItems.querySelector("#concepto-template").cloneNode(true);
     bloqueFormulario.id = "";
@@ -259,8 +312,9 @@ actualizarInputFecha();
     bloqueFormulario.querySelector("[name='input-importe']").addEventListener("change", function () {
 
       calcularImporteTotal();
-    });
 
+
+    });
 
     const eliminarBtn = bloqueFormulario.querySelector(".eliminar-concepto");
     eliminarBtn.addEventListener("click", function () {
@@ -268,7 +322,12 @@ actualizarInputFecha();
       calcularImporteTotal();
       
     });
+    if(datoItem = undefined){
 
+      bloqueFormulario.querySelector("[name='input-importe']").value = datoItem.importe;
+      bloqueFormulario.querySelector("[name='descripcion-concepto']").textContent = datoItem.descripcion;
+
+    }
 
 
     contenedorItems.append(bloqueFormulario);
