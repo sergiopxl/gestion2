@@ -14,4 +14,5 @@ $sqlGastos = "SELECT gastos_tb.*, proveedores_tb.nombre AS proveedor FROM `gasto
 $respuestaGastos = mysqli_query($conn, $sqlGastos);
 while ($gasto = mysqli_fetch_assoc($respuestaGastos)) {
     $gastos[]=$gasto;
-} echo json_encode($gastos);
+} 
+echo json_encode($gastos);
