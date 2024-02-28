@@ -68,7 +68,7 @@ function doGastos() {
       botonGuardarCambio.classList.add("btn-succes");
       botonGuardarCambio.addEventListener("click", e => {
         e.preventDefault();
-        guardarNuevaFactura();
+        guardarNuevoGasto();
   
       })
     });
@@ -79,5 +79,6 @@ function doGastos() {
     })
   }
 }
+guardarNuevoGasto();//HACER ESTO AHORA
 
 doGastos();

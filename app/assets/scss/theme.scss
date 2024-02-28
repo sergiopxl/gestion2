@@ -4,11 +4,12 @@
 @import "_header";
 @import "_navigation";
 @import "_modal";
+@import "_paginacion.scss";
 @import "../../modules/inicio/scss/_inicio";
 @import "../../modules/clientes/scss/_clientes";
 @import "../../modules/comunicaciones/scss/_comunicaciones";
 @import "../../modules/facturas/scss/_facturas";
 
 @import "../../modules/informes/scss/_informes";
-@import "_paginacion.scss";
-@import "../../modules/proveedores/scss/proveedores";
+
+@import "../../modules/proveedores/scss/_proveedores";

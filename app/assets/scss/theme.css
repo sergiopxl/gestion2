@@ -341,18 +341,17 @@ fieldset {
 }
 
 /* Estilos para el template de concepto */
-.concepto-template {
+#factura-new-template .listado-conceptos .concepto-template {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
   gap: 1rem;
   margin-top: 0.5rem;
 }
-.concepto-template .eliminar-concepto {
+#factura-new-template .listado-conceptos .concepto-template .eliminar-concepto {
   margin-top: 1.75rem;
 }
-.concepto-template textarea {
+#factura-new-template .listado-conceptos .concepto-template textarea {
   height: 8ch;
 }
 
