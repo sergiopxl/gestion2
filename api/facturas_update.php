@@ -18,7 +18,29 @@ $iva = $data['iva'];
 $descripcion = $data['descripcion'];
 $id_cliente = $data['id_cliente'];
 $importe = $data['importe'];
-$respuesta;
+
+
+
+$sqlFacturaUpdate = "UPDATE facturas_tb SET
+baseimponible = $baseimponible,
+iva = $iva,
+descripcion ='$descripcion'
+WHERE id_cliente = $id_cliente";
+
+
+
+$respuesta = mysqli_query($conn,$sqlFacturaUpdate);
+
+if($respuesta){
+    $mensaje = "Registro actualizado correctamente"; // Mensaje de éxito
+} else {
+    $mensaje = "Tienes un problema"; // Mensaje de error
+}
+
+
+echo json_encode($mensaje);
+
+
 
 
 

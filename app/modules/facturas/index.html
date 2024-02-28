@@ -13,6 +13,8 @@
   <script src="../../assets/js/formato_moneda.js" defer></script>
   <script src="js/facturas.js" defer></script>
   <script src="js/modalBuscar.js" defer></script>
+  <script src="../../assets/js/modal.js" defer></script>
+
 
 </head>
 
@@ -107,7 +109,8 @@
     </header>
     
     <div class="listado-conceptos">
-      <div id="concepto-template" class="hidden" >
+      <div id="concepto-template" class="hidden"  >
+        <input type="hidden" name="input-id-items" value="0">
         <fieldset>
           <label for="">Descripcion</label>
           <textarea name="descripcion-concepto" id="" cols="30" rows="10"></textarea>

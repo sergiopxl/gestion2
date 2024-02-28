@@ -15,5 +15,6 @@ const apiUrlProveedoresServiciosGet="http://localhost/gestion2/api/proveedores_s
 const apiUrlProveedorUpdate="http://localhost/gestion2/api/proveedores_update.php"
 const apiUrlFacturasPost="http://localhost/gestion2/api/facturas_post.php";
 const apiUrlFacturasUpdate="http://localhost/gestion2/api/facturas_update.php";
+const apiUrlFacturasDelete="http://localhost/gestion2/api/facturas_delete.php";
 
 

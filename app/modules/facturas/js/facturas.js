@@ -8,8 +8,8 @@ function doFacturas() {
   const templateFacturaItem = templateFactura.querySelector("#factura-item-template");
   console.log(templateFacturaItem)
   const contenedorAcciones = document.querySelector("#acciones");
-  const inputIva= document.querySelector("#input-iva")
-  
+  const inputIva = document.querySelector("#input-iva");
+
 
 
 
@@ -20,7 +20,7 @@ function doFacturas() {
     - declaración de variables de ambito general 
     - eventos de acciones generales del apartado
   */
-/* - recogida de datos del formulario creando un JSON, no se puede hacer con un FormData. - envio de datos al API POST, los datos del body han de ir en formato JSON pero convertidos a cadena. - información resultado del alta */
+  /* - recogida de datos del formulario creando un JSON, no se puede hacer con un FormData. - envio de datos al API POST, los datos del body han de ir en formato JSON pero convertidos a cadena. - información resultado del alta */
   getFacturas();
 
 
@@ -63,7 +63,7 @@ function doFacturas() {
 
 
       const editarFacturaBtn = contenedorFactura.querySelector(".factura-editar-button")
-      editarFacturaBtn.addEventListener("click",(event)=>{
+      editarFacturaBtn.addEventListener("click", (event) => {
         event.preventDefault();
         editarFactura(factura);
 
@@ -117,14 +117,13 @@ function doFacturas() {
 
     const inputFecha = document.querySelector("[name='input-fecha-emision']");
     inputFecha.value = fechaFormateada;
-}
+  }
 
-// Llamar a la función para actualizar el input de fecha cuando se cargue la página
-actualizarInputFecha();
+  // Llamar a la función para actualizar el input de fecha cuando se cargue la página
+  actualizarInputFecha();
 
 
   function doNuevaFactura() {
-   
 
 
     contenedorListado.innerHTML = "";
@@ -134,13 +133,11 @@ actualizarInputFecha();
     templateCfactura.classList.remove("hidden");
     contenedorListado.append(templateCfactura);
 
-    
 
-    
     /////
     contenedorAcciones.innerHTML = "";
     const botonBuscarCliente = document.querySelector("#buscar-cliente-btn")
-    botonBuscarCliente.addEventListener("click",()=>{
+    botonBuscarCliente.addEventListener("click", () => {
       new ModalBuscar();
 
     })
@@ -151,7 +148,7 @@ actualizarInputFecha();
     botonGuardar.classList.add("btn-success");
     botonGuardar.addEventListener("click", e => {
       e.preventDefault();
-      guardarNuevaFactura();
+      guardarNuevaFactura(apiUrlFacturasPost);
 
     })
     const nuevoConcepto = document.createElement("button");
@@ -172,68 +169,20 @@ actualizarInputFecha();
       - evento botón guardar -> guardarNuevaFactura()
     */
 
-      function guardarNuevaFactura() {
-        // Recogida de datos del formulario creando un JSON
-        const nuevaFactura = {
-          baseimponible: baseimponible,
-          iva: document.querySelector("#input-iva").value,
-          descripcion: document.querySelector("textarea[name='descripcion-concepto']").value,
-          id_cliente: document.querySelector("input[name='input-id-cliente']").value,
-          importe: constIva,
-          
-          items:[]
-        };
-
-        const items = document.querySelectorAll(".concepto-template");
-        items.forEach(item=> { 
-          nuevaFactura.items.push({
-            descripcion: item.querySelector("[name = 'descripcion-concepto']").value,
-            importe: item.querySelector("[name = 'input-importe']").value
-
-          });
-        
-        })
-        console.log(JSON.stringify(nuevaFactura))
-        // Envío de datos al API POST
-        fetch(apiUrlFacturasPost, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Requested-With": "XMLHttpRequest", // Para el control de solicitudes AJAX en PHP
-              
-            },
-            body: JSON.stringify(nuevaFactura)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error en la solicitud: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(resultado => {
-            console.log("Respuesta del servidor:", resultado);
-            // Aquí puedes manejar la respuesta del servidor, por ejemplo, mostrar un mensaje al usuario.
-        })
-        .catch(error => {
-            console.error("Error al enviar la factura:", error);
-            // Aquí puedes manejar los errores, por ejemplo, mostrar un mensaje de error al usuario.
-        });
-    }
-    
-
   }
 
   function editarFactura(factura) {
+
+    console.log("base",factura.baseimponible)
     contenedorAcciones.innerHTML = "";
     
 
-    
     const botonGuardar = document.createElement("button");
     botonGuardar.textContent = "Guardar";
     botonGuardar.classList.add("btn-success");
     botonGuardar.addEventListener("click", e => {
       e.preventDefault();
-      guardarEdicionFactura(factura);
+      guardarNuevaFactura(apiUrlFacturasUpdate,factura.id)
 
     })
     const nuevoConcepto = document.createElement("button");
@@ -247,60 +196,98 @@ actualizarInputFecha();
 
     contenedorListado.innerHTML = "";
 
-    const contenedorFactura =  document.querySelector("#factura-new-template").cloneNode(true);
+    const contenedorFactura = document.querySelector("#factura-new-template").cloneNode(true);
     contenedorFactura.classList.remove("hidden");
-    contenedorListado.append(contenedorFactura);   
+    contenedorListado.append(contenedorFactura);
 
+    const inputIva= contenedorFactura.querySelector("#input-iva")
+    inputIva.addEventListener("change" , ()=>{
+      console.log("change")
+      calcularImporteTotal();
+    })
+    
+    contenedorFactura.querySelector("[name='input-id-cliente']").value = factura.id_cliente;
     contenedorFactura.querySelector("[name='input-baseimponible']").value = factura.baseimponible;
-    contenedorFactura.querySelector(".importe-total").textContent = formatoMoneda(factura.baseimponible * (1+(factura.iva/100)));
+    contenedorFactura.querySelector(".importe-total").textContent = formatoMoneda(factura.baseimponible * (1 + (factura.iva / 100)));
     contenedorFactura.querySelector("[name=input-iva]").value = factura.iva;
     contenedorFactura.querySelector(".cliente-vista").textContent = factura.cliente;
     contenedorFactura.querySelector("[name='input-fecha-emision']").value = factura.fecha_emision;
-  
+
 
     const botonBuscarCliente = contenedorFactura.querySelector("#buscar-cliente-btn")
-    botonBuscarCliente.addEventListener("click",()=>{
+    botonBuscarCliente.addEventListener("click", () => {
       new ModalBuscar();
+    })
+
+    factura.items.forEach(item => {
+      console.log("item: ", item)
+      contenedorFactura.querySelector("[name='input-id-items']").value = item.id;
+      
+      crearItem(contenedorFactura, item);
+      console.log(item.id)
+      guardarNuevaFactura(apiUrlFacturasUpdate,item.id)
 
     })
-    
-factura.items.forEach(item =>{
-  crearItem(contenedorFactura,item);
 
-})
 
-  
-}
+  }
 
-function guardarEdicionFactura(factura) {
+  function guardarNuevaFactura(api,id) {
+    // Recogida de datos del formulario creando un JSON
+    if(!id){
+      id=0;
+    }
 
-    const facturaEditada = {
-        baseimponible: baseimponible,
-        iva: document.querySelector("#input-iva").value,
-        descripcion: document.querySelector("textarea[name='descripcion-concepto']").value,
-        id_cliente: document.querySelector("input[name='input-id-cliente']").value,
-        importe: constIva,
-        items: []
+    const nuevaFactura = {
+      baseimponible: baseimponible,
+      iva: document.querySelector("#input-iva").value,
+      descripcion: document.querySelector("textarea[name='descripcion-concepto']").value,
+      id_cliente: document.querySelector("input[name='input-id-cliente']").value,
+      importe: constIva,
+
+      items: []
     };
 
     const items = document.querySelectorAll(".concepto-template");
     items.forEach(item => {
-        facturaEditada.items.push({
-            descripcion: item.querySelector("[name='descripcion-concepto']").value,
-            importe: item.querySelector("[name='input-importe']").value
-        });
-    });
+      nuevaFactura.items.push({
+        id:item.querySelector("[name = 'input-id-items']").value,
+        descripcion: item.querySelector("[name = 'descripcion-concepto']").value,
+        importe: item.querySelector("[name = 'input-importe']").value
 
-    console.log(JSON.stringify(facturaEditada));
+      });
 
-   
-}
+    })
+    console.log(JSON.stringify(nuevaFactura))
+    // Envío de datos al API POST
+    fetch(api, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest", // Para el control de solicitudes AJAX en PHP
 
+      },
+      body: JSON.stringify(nuevaFactura)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Error en la solicitud: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(resultado => {
+        console.log("Respuesta del servidor:", resultado);
+        // Aquí puedes manejar la respuesta del servidor, por ejemplo, mostrar un mensaje al usuario.
+      })
+      .catch(error => {
+        console.error("Error al enviar la factura:", error);
+        // Aquí puedes manejar los errores, por ejemplo, mostrar un mensaje de error al usuario.
+      });
+  }
 
   function crearItem(contenedorItems, datoItem) {
-    console.log("Agregue un item!")
 
-    
+    console.log("datoItem", datoItem)
 
     const bloqueFormulario = contenedorItems.querySelector("#concepto-template").cloneNode(true);
     bloqueFormulario.id = "";
@@ -313,16 +300,20 @@ function guardarEdicionFactura(factura) {
 
       calcularImporteTotal();
 
-
     });
 
     const eliminarBtn = bloqueFormulario.querySelector(".eliminar-concepto");
     eliminarBtn.addEventListener("click", function () {
-      bloqueFormulario.remove();
-      calcularImporteTotal();
+
+      eliminarItem(bloqueFormulario);
+     
       
+
+
     });
-    if(datoItem = undefined){
+
+
+    if (datoItem != undefined) {
 
       bloqueFormulario.querySelector("[name='input-importe']").value = datoItem.importe;
       bloqueFormulario.querySelector("[name='descripcion-concepto']").textContent = datoItem.descripcion;
@@ -336,30 +327,32 @@ function guardarEdicionFactura(factura) {
       - evento eliminar item -> eliminarItem(item) -> calcularImporteTotal(); 
       - appen item al contendorItems
     */
-//TODO: pasar el codigo al chatgpt para comentar y explicar
+    //TODO: pasar el codigo al chatgpt para comentar y explicar
   }
+
+  
   function calcularImporteTotal() {
     const importeTotalContainer = document.querySelector(".importe-total");
-    
-    let importeIva=0;
+
+    let importeIva = 0;
 
     let importeTotal = 0;
     const importes = document.querySelectorAll("[name='input-importe']");
-    const iva=document.querySelector("[name='input-iva']").value;
+    const iva = document.querySelector("[name='input-iva']").value;
     importes.forEach(importe => {
 
       importeTotal += parseFloat(importe.value)
-      importeIva = importeTotal*(1+(iva/100));
+      importeIva = importeTotal * (1 + (iva / 100));
     });
 
-    
 
-    importeTotalContainer.textContent=formatoMoneda(importeIva);
+
+    importeTotalContainer.textContent = formatoMoneda(importeIva);
     constIva = importeIva;
     baseimponible = importeTotal;
 
 
-    
+
 
 
 
@@ -367,10 +360,10 @@ function guardarEdicionFactura(factura) {
   let constIva = 0;
   let baseimponible = 0;
 
-  inputIva.addEventListener("change" ,()=> {
+  inputIva.addEventListener("change", () => {
     calcularImporteTotal();
-    
-  }) 
+
+  })
   function buscarCliente() {
     new ModalBuscar();
 
@@ -379,7 +372,7 @@ function guardarEdicionFactura(factura) {
       - evento boton buscar -> getClientes(consulta)
     */
     function getClientes(consulta) {
-      
+
       /*
         - consulta al api 
         - mostrar resultados
@@ -387,5 +380,21 @@ function guardarEdicionFactura(factura) {
       */
     }
   }
+
+  function eliminarItem(item) {    
+    const idItem = item.querySelector("[name = 'input-id-items']").value;
+    const facturaString1 = JSON.stringify({id : idItem });
+    fetch(apiUrlFacturasDelete, {method: "POST", body:facturaString1})
+      .then((respuesta) => {
+        if(!respuesta.ok){
+          throw new Error(`Error en la solicitud:  ${respuesta.status}`);
+        }
+        respuesta.json()
+      }) 
+      
+      item.remove();
+      calcularImporteTotal();
+
+    }
 }
 doFacturas();

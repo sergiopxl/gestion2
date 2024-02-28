@@ -125,10 +125,11 @@
 }
 
 /* Estilos para el template de concepto */
-#factura-new-template .listado-conceptos .concepto-template {
+.concepto-template {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   margin-top: 0.5rem;
   .eliminar-concepto{
