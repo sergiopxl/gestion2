@@ -57,28 +57,53 @@ function doGastos() {
     formularioNuevoGasto.id = ""; //limpiamos el id
     formularioNuevoGasto.classList.remove("hidden"); //aca como clonamos el template del html que tenia hidden, se lo sacamos
     contenedorListado.append(formularioNuevoGasto); //con append le meto el template al contenedorListado
-    const botonGuardarGasto = formularioNuevoGasto.querySelector(
-      "#formulario-boton-guardar"
-    ); //busco en la plantila(formularioNuevoGasto)el id del boton del html y guardo esa referencia en la variable que cree botonGuardarGasto
-    botonGuardarGasto.addEventListener("click", (e) => {
+
+    const botonGuardarGastoNuevo = document.createElement("button"); //creo el boton en lugar de crearlo en el html
+    botonGuardarGastoNuevo.textContent = "Guardar";
+    botonGuardarGastoNuevo.classList.add("btn-success");
+    botonGuardarGastoNuevo.addEventListener("click", (e) => {
       //aca le doy un evento al boton
       e.preventDefault();
-      const botonGuardarCambio = document.createElement("button");
-      botonGuardarCambio.textContent = "guardar";
-      botonGuardarCambio.classList.add("btn-succes");
-      botonGuardarCambio.addEventListener("click", e => {
-        e.preventDefault();
-        guardarNuevoGasto();
-  
-      })
+      guardarNuevoGasto(apiUrlGastosPost); //debajo la defino a la funcion
     });
-    const botonBuscar = formularioNuevoGasto.querySelector("#buscar-cliente-btn")
-    botonBuscar.addEventListener("click",(e)=>{
+
+    formularioNuevoGasto.append(botonGuardarGastoNuevo); //con este append hago que el boton que acabo de crear se inseerte, sin esta linea no me aparece en el html
+
+    function guardarNuevoGasto() {
+      const nuevoGasto = {
+        importe: parseFloat(document.querySelector("[name = 'input-gasto-importe']").value),//aqui realice un parse float por que el campo espera recibir cadenna de caracteres
+        estado: document.querySelector("[name = 'input-gasto-estado']").value,
+        descripcion: document.querySelector("[name = 'input-gasto-descripcion']").value,
+
+        items: [],
+      };
+
+      fetch(apiUrlGastosPost, {//ese es el nombre que le puse en apiroots a la ruta con el docu gastos_post.php
+        method: "POST",
+        body: JSON.stringify(nuevoGasto),//Convierte el objeto nuevoGasto en una cadena JSON para que pueda ser enviado correctamente mediante el POST.
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((resultado) => {
+          console.log("Respuesta del servidor:", resultado);
+        })
+        .catch((error) => {
+          console.error("Error al enviar el gasto:", error);
+        });
+    }
+
+    const botonBuscar = formularioNuevoGasto.querySelector(
+      "#buscar-cliente-btn"
+    );
+    botonBuscar.addEventListener("click", (e) => {
       e.preventDefault();
-      new ModalBuscar()
-    })
+      new ModalBuscar();
+    });
   }
 }
-guardarNuevoGasto();//HACER ESTO AHORA
 
 doGastos();
