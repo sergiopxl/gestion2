@@ -6,33 +6,31 @@ function doGastos() {
   const contenedorListado = document.querySelector(".contenedorlistado"); //capturamos el contenedor
   const templateGasto = document.querySelector("#gastos-template"); //capturamos el template
   const botonNuevoGasto = document.querySelector("#nueva-gasto-btn");
-  const templateNuevoGasto = document.querySelector(
-    "#bloque-formulario-nuevoGasto"
-  );
+  const templateNuevoGasto = document.querySelector("#bloque-formulario-nuevoGasto");
 
   botonNuevoGasto.addEventListener("click", (e) => {
     e.preventDefault();
     doNuevoGasto();
   });
 
-  getGastos();
+ 
 
-  function getGastos() {
-    fetch(
-      apiUrlGastosGet, //con esta linea me conecto con el php
-      { method: "GET" }
-    ) //aca se config el verbo para pedir o enviar etc
-      .then((respuesta) => {
-        if (!respuesta.ok) {
-          throw new Error(`Error en la solicitud: ${respuesta.status}`);
-        }
-        respuesta.json().then((gastos) => {
-          //console.log(gastos);
+    function getGastos() {
+      fetch(
+        apiUrlGastosGet, //con esta linea me conecto con el php
+        { method: "GET" } ) //aca se config el verbo para pedir o enviar etc
 
-          printGastos(gastos);
+        .then((respuesta) => {  //Esta linea toma la respuesta de la solicitud como parametro
+          if (!respuesta.ok) //si esa respuesta no esta ok lanza un error
+          {throw new Error(`Error en la solicitud: ${respuesta.status}`);}
+          respuesta.json().then((gastos) => {//si la respuesta esta ok convierte los datos en json primero y despues llamamos a la funcion print para imprimir los gastos
+            
+            printGastos(gastos);
+          });
         });
-      });
-  }
+    }
+    getGastos();
+
   function printGastos(gastos) {
     gastos.forEach((gasto) => {
       //console.log(gasto);
@@ -74,8 +72,9 @@ function doGastos() {
         importe: parseFloat(document.querySelector("[name = 'input-gasto-importe']").value),//aqui realice un parse float por que el campo espera recibir cadenna de caracteres
         estado: document.querySelector("[name = 'input-gasto-estado']").value,
         descripcion: document.querySelector("[name = 'input-gasto-descripcion']").value,
+        id_provedor: document.querySelector("[name = 'input-id-proveedor']").value
 
-        items: [],
+        
       };
 
       fetch(apiUrlGastosPost, {//ese es el nombre que le puse en apiroots a la ruta con el docu gastos_post.php
@@ -96,9 +95,7 @@ function doGastos() {
         });
     }
 
-    const botonBuscar = formularioNuevoGasto.querySelector(
-      "#buscar-cliente-btn"
-    );
+    const botonBuscar = formularioNuevoGasto.querySelector("#buscar-cliente-btn");
     botonBuscar.addEventListener("click", (e) => {
       e.preventDefault();
       new ModalBuscar();

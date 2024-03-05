@@ -41,12 +41,10 @@ class ModalBuscar {
 
                             // Actualizar la vista con el nombre del cliente seleccionado
                             document.querySelector(".cliente-vista span").textContent = cliente.nombre;
-                            document.querySelector("[name='input-id-cliente']").value = cliente.id;
+                            document.querySelector("[name='input-id-proveedor']").value = cliente.id;
                             this.destroy(); // Cerrar el modal después de seleccionar un cliente
 
-                            const selectContactos = document.querySelector("[name='contacto-select']");
-                            selectContactos.innerHTML = "<option value='' selected disabled> Seleccione contacto</option>";
-
+                            
                             cliente.contactos.forEach(contacto=>{
                                 const option = document.createElement("option");
                                 option.value = contacto.id;
