@@ -58,7 +58,7 @@ function doFacturas() {
       contenedorFactura.querySelector(".factura-numero strong").textContent = factura.id;
       contenedorFactura.querySelector(".factura-cliente strong").txtContent = factura.cliente;
       contenedorFactura.querySelector(".factura-estado strong").textContent = factura.estado;
-      contenedorFactura.querySelector(".factura-importe strong").textContent = factura.importe;
+      contenedorFactura.querySelector(".factura-importe strong").textContent = formatoMoneda(factura.baseimponible * (1 + (factura.iva / 100)));
       contenedorFactura.querySelector(".factura-descripcion").textContent = factura.descripcion;
 
 
@@ -212,6 +212,7 @@ function doFacturas() {
     contenedorFactura.querySelector("[name=input-iva]").value = factura.iva;
     contenedorFactura.querySelector(".cliente-vista").textContent = factura.cliente;
     contenedorFactura.querySelector("[name='input-fecha-emision']").value = factura.fecha_emision;
+
 
 
     const botonBuscarCliente = contenedorFactura.querySelector("#buscar-cliente-btn")
