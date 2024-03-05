@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion | gastos</title>
+
+  <link rel="stylesheet" href="../../assets/css/theme.css">
+
+  <script src="../../assets/js/api_roots.js"></script>
+  <script src="../../assets/js/navigation.js" defer></script>
+  <script src="../../assets/js/formato_moneda.js" defer></script>
+  <script src="js/gastos.js" defer></script>
+  <script src="../facturas/js/modalBuscar.js"></script>
+ 
+
+</head>
+<body>
+
+    <header id="header-pagina">
+        <nav id="navegacion-principal">
+          <ul></ul>
+        </nav>
+      </header>
+
+      <section id="acciones" class="acciones-pagina">
+        <div id="nueva-gasto-btn" class="btn-success">Nueva Gasto</div>
+        <div id="paginacion"></div>
+        <div id="buscador">
+          <input type="text" id="buscador-input">
+          <button class="btn-info" id="buscador-boton">Buscar</button>
+        </div>
+      </section>
+<main>
+
+      <div class="contenedorlistado">
+
+      </div>
+
+</main>
+
+<!--desde aca el template de nuevo gasto el que saldra despues de cliclkear en nuevo gasto-->
+
+<div id="bloque-formulario-nuevoGasto" class="hidden">
+  <form action="" method="post" class="cliente-formulario">
+    <input type="hidden" name="input-gasto-id">
+    <fieldset>
+      <input type="hidden" name="input-id-cliente">
+      <div class="cliente-vista">proveedor: <span></span></div>
+      <button id="buscar-cliente-btn">Buscar proveedor</button>
+    </fieldset>
+    <fieldset>
+      <label for="input-gasto-estado">Estado</label>
+      <input type="text" name="input-gasto-estado" required="required">
+    </fieldset>
+    <fieldset>
+      <label for="input-gasto-importe">Importe</label>
+      <input type="text" name="input-gasto-importe" required="required">
+    </fieldset>
+    <fieldset>
+      <label for="input-gasto-descripcion">Descripción del gasto</label>
+      <input type="text" name="input-gasto-descripcion" required="required">
+    </fieldset>
+    
+   <!--<button id="formulario-boton-guardar" class="btn-success ">Guardar gasto</button> creo el boton lo ddibujo-->
+  </form>
+  
+  
+  
+<!--desde aca el template de nuevo gasto el que usare en el boton-->
+
+
+
+
+      <div id="gastos-template" class="gastos-row hidden ">  
+
+        <di v class="gasto-resumen-datos">
+          <div class="gasto-botones">
+            <button class="gasto-editar-button btn-info">editar</button>
+            <button class="gasto-enviado-button btn-info">Marcar como enviado</button>
+            <button class="gasto-pagar-button btn-info">Registrar gasto</button>
+          </div>
+    
+          <div class="gasto-resumen">
+            <p class="gasto-numero">Nombre del proveedor: <strong>000001</strong></p>
+            <p class="gasto-estado">Estado: <strong>Pendiente</strong></p>
+            <p class="gasto-importe">Importe : <strong>1000€</strong></p>
+            <p class="gasto-descripcion">Descripción:</p>
+          </div>
+    
+          <div class="gasto-fechas">
+            <p class="gasto-fecha-emision">Fecha: <strong> 2024-02-10</strong></p>
+          </div>
+
+        </div>
+
+        <div class="gasto-items">
+
+          <div id="gasto-item-template" class="gasto-item hidden ">
+            <input type="hidden" name="input-item-id">
+            <p class="item-descripcion">Este gasto corresponde a la compra de utiles para oficina</p>
+          </div>
+
+        </div>
+        
+      </div>
+
+</body>
+</html>

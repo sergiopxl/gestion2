@@ -5,11 +5,16 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, X-User-ID,X-Token, Accept, Accept-Encoding");
 header("Access-Control-Allow-Methods: GET");
 include("conn/conexion.php");
+$limite = " ";
 
-$inicio = $_GET["inicio"];
-$porPagina = $_GET["porpagina"];
-$condicion = " WHERE 1 ";
-$limite = " LIMIT $inicio, $porPagina ";
+if(isset($_GET["inicio"]) && isset($_GET["porpagina"])){
+    $inicio = $_GET["inicio"];
+    $porPagina = $_GET["porpagina"];
+    $condicion = " WHERE 1 ";
+    $limite = " LIMIT $inicio, $porPagina ";
+}
+
+
 $respuesta=[];
 if(isset($_GET["buscar"])){
     $buscar = $_GET["buscar"];

@@ -28,6 +28,10 @@ function doNavigation(){
       literal : "proveedores",
       url : "../../modules/proveedores/index.html"
     },
+    {
+      literal : "gastos",
+      url : "../../modules/gastos/index.html"
+    },
 
 
   ];
