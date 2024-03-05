@@ -12,7 +12,7 @@ class ModalBuscar {
         this.contenedor.classList.add("modal-contenedor");
         this.inputBusqueda.classList.add("input-modal");
         this.boton.classList.add("btn-modal");
-        this.boton.textContent= "Buscar";
+        this.boton.textContent = "Buscar";
         this.resultado.classList.add("resultado-modal");
         this.exit.classList.add("exit-modal");
 
@@ -39,19 +39,14 @@ class ModalBuscar {
                         // Evento al hacer clic en un cliente encontrado
                         divClienteResultadoBusqueda.addEventListener("click", () => {
 
+
                             // Actualizar la vista con el nombre del cliente seleccionado
-                            document.querySelector(".cliente-vista span").textContent = cliente.nombre;
+                            document.querySelector(".proveedor-vista span").textContent = cliente.nombre;
                             document.querySelector("[name='input-id-proveedor']").value = cliente.id;
                             this.destroy(); // Cerrar el modal después de seleccionar un cliente
 
-                            
-                            cliente.contactos.forEach(contacto=>{
-                                const option = document.createElement("option");
-                                option.value = contacto.id;
-                                option.textContent= `${contacto.nombre} ${contacto.apellido1} ${contacto.apellido2}`;
-                                selectContactos.appendChild(option);
-                            });
-                               this.destroy(); 
+
+
                         });
                         // Mostrar el nombre del cliente en el resultado de la búsqueda
                         divClienteResultadoBusqueda.textContent = cliente.nombre;

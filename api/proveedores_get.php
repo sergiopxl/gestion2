@@ -6,11 +6,11 @@ header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Ca
 header("Access-Control-Allow-Methods: GET");
 include("conn/conexion.php");
 $limite = " ";
-
-if(isset($_GET["inicio"]) && isset($_GET["porpagina"])){
+$condicion = " WHERE 1 ";
+if(isset($_GET["inicio"])){
     $inicio = $_GET["inicio"];
     $porPagina = $_GET["porpagina"];
-    $condicion = " WHERE 1 ";
+    
     $limite = " LIMIT $inicio, $porPagina ";
 }
 

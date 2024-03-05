@@ -40,7 +40,7 @@ if(!$error)
 else
     echo json_encode("Ha habido un problema");
 
-   // SELECT facturas_tb.*, clientes_tb.nombre AS cliente, facturas_estados_tb.nombre AS estado 
+    //SELECT facturas_tb.*, clientes_tb.nombre AS cliente, facturas_estados_tb.nombre AS estado 
    //FROM facturas_tb LEFT JOIN clientes_tb ON facturas_tb.id_cliente = clientes_tb.id LEFT JOIN facturas_estados_tb ON facturas_tb.id_estado= facturas_estados_tb.id WHERE 1;
 
 

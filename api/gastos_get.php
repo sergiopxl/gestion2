@@ -6,13 +6,17 @@ header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Ca
 header("Access-Control-Allow-Methods: GET");
 include("conn/conexion.php");
 
-$respuesta = [];
-$error = false;
+$sqlGastos = "SELECT gastos_tb.*, proveedores_tb.nombre AS proveedor from gastos_tb LEFT JOIN proveedores_tb ON gastos_tb.id_empresa = proveedores_tb.id WHERE 1";
 
-$gastos = [];
-$sqlGastos = "SELECT gastos_tb.*, proveedores_tb.nombre AS proveedor FROM `gastos_tb` LEFT JOIN proveedores_tb ON gastos_tb.id_empresa = proveedores_tb.id WHERE 1";
-$respuestaGastos = mysqli_query($conn, $sqlGastos);
-while ($gasto = mysqli_fetch_assoc($respuestaGastos)) {
-    $gastos[]=$gasto;
-} 
-echo json_encode($gastos);
+$respuesta = mysqli_query($conn,$sqlGastos);
+
+if($respuesta){
+    $gastos = [];
+    while($gasto = mysqli_fetch_assoc($respuesta)){
+        $gastos[] = $gasto;
+    }
+    echo json_encode($gastos);
+}else{
+    echo json_encode("Error en la consulta");
+}
+
