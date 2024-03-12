@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+    <script src="../../assets/js/api_roots.js"></script>
+    <script src="../../assets/js/navigation.js" defer></script>
+    <script src="../../assets/js/modal.js"></script>
+    <script src="js/usuarios.js" defer></script>
+
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+
+</head>
+<body>
+    <header id="header-pagina">
+        <nav id="navegacion-principal">
+            <ul></ul>
+
+        </nav>
+    </header>
+
+    <div id="acciones" class="acciones-paginacion">
+        <div class="btn-succes" id="nuevo-usuario-btn">Nuevo usuario</div>
+    </div>
+
+    <h1 id="h1-apartado"></h1>
+
+    <main></main>
+
+    <div id="usuario-row" class="usuario-row hidden">
+        <div class="usuario-avatar">
+            <div class="usuario-id"></div>
+            <img src="" alt="">
+        </div>
+        <div class="usuario-nombre"></div>
+        <div class="usuario-email"></div>
+        <div class="usuario-role"></div>
+        <button class="editar-usuario btn-succes">editar</button>
+    </div>
+
+    <form action="" enctype="multipart/form-data" id="usuario-form" class="usuario-form hidden">
+        <fieldset><label for="">nombre</label><input type="text" name="nombre-usuario"></fieldset>
+        <fieldset><label for="">Email</label><input type="text" name="email-usuario"></fieldset>
+        <fieldset><label for="">Password</label><input type="text" name="pass"></fieldset>
+
+        <fieldset><label for="">Avatar</label><input type="file" name="avatar"></fieldset>
+        <button class="boton-guardar-form btn-succes">guardar</button>
+    </form>
+
+
+    
+</body>
+</html>

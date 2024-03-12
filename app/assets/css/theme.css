@@ -399,4 +399,57 @@ fieldset {
 #bloque-formulario {
   display: flex;
   flex-direction: row;
+}
+
+.usuario-row {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.usuario-row > div {
+  flex: 1 1 auto;
+}
+.usuario-row > div.usuario-avatar {
+  position: relative;
+  flex: 0 0 100px;
+}
+.usuario-row > div.usuario-avatar .usuario-id {
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  display: flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  background-color: whitesmoke;
+  border: 3px solid black;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+.usuario-row > div.usuario-nombre {
+  flex: 1 1 20%;
+}
+.usuario-row > div.usuario-email {
+  flex: 1 1 20%;
+}
+.usuario-row > div.usuario-role {
+  flex: 1 1 20%;
+}
+.usuario-row img {
+  width: 100px;
+  height: 100px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 50%;
+  background-color: black;
+}
+
+.switch-pass {
+  font-size: 1.5rem;
+  color: green;
+  cursor: pointer;
 }/*# sourceMappingURL=theme.css.map */

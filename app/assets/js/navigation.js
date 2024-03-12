@@ -25,12 +25,17 @@ function doNavigation(){
       url : "../../modules/informes/index.html"
     },
     {
-      literal : "proveedores",
+      literal : "Proveedores",
       url : "../../modules/proveedores/index.html"
     },
     {
-      literal : "gastos",
+      literal : "Gastos",
       url : "../../modules/gastos/index.html"
+    },
+
+    {
+      literal : "Usuarios",
+      url : "../../modules/usuarios/index.html"
     },
 
 
